@@ -1,0 +1,34 @@
+<div class="box" style="text-align: center; padding-top: 20px;">
+  <article class="media-center">
+    <div class="media-content">
+      <div class="content">
+        <div class="columns is-mobile">
+          <div class="column">
+            <div class="main" dir="rtl">
+              <label *ngFor="let title of weekArray"> {{title}} </label>
+              <div class="calender-days" *ngFor="let row of squares ">
+                <div class="squares">
+                  <p class="scroll" *ngFor="let item of row.users; let i = index" style="margin-bottom: 0 ">
+                    <small *ngIf=" !item.isAvilable  && ( item.isCheck || item.isCheck == null)" style="color: red;">
+                      <input type="checkbox" (click)="changeSidor(i,row, item )">
+                      {{item.name}}
+                    </small>
+                    <small *ngIf="item.isAvilable  && ( item.isCheck || item.isCheck == null)" style="color: black;">
+                      <input type="checkbox" (click)="changeSidor(i,row, item )">
+                      {{item.name}}
+                    </small>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="media-content">
+        <button type="button" type="submit" class="button is-primary is-rounded" (click)="saveSidur()">
+          save sidor
+        </button>
+      </div>
+    </div>
+  </article>
+</div>

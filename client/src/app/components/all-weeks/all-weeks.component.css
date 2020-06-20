@@ -1,0 +1,44 @@
+.calender-days {
+  text-align: center;
+  width: 130px;
+  height: 140px;
+  /* background-color: #67676d ; */
+  border: 3px #adadcf;
+  color: aliceblue;
+}
+
+#calender {
+  /* width: 462px;; */
+}
+
+.main {
+  text-align: center;
+  display: inline-grid;
+  grid-template-columns: 140px 140px 140px 140px 140px 140px 140px;
+  grid-gap: 1px;
+}
+
+.squares {
+  overflow-y: scroll;
+  border: 1px gray solid;
+  height: 135px;
+  width: 125px;
+}
+
+.btnPhone {
+  background-color: transparent;
+  border-top: 1px solid #ededed;
+  align-items: stretch;
+  display: grid;
+}
+
+
+/* @media {
+  .main {
+    text-align: center;
+    display:inline-grid;
+    grid-template-columns: 40px 40px 40px 40px 40px 40px 40px;
+    grid-gap: 1px;
+  } */
+
+/* } */

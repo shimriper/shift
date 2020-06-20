@@ -1,0 +1,69 @@
+<div class="card" dir="rtl" style="text-align: center; padding-top: 5px;">
+  <div class="card-body ">
+    <h4 class="card-title">Shifts Requests</h4>
+    <div class="field">
+      <!-- <div class="control">
+        <div class="select">
+          <select (change)="changeOption($event)">
+            <option *ngFor="let item of chooseOption" [value]="item">
+              <label class="label">num of weeks</label>
+              {{ item }}
+            </option>
+          </select>
+        </div>
+      </div> -->
+    </div>
+    <div>
+      <label> {{ sunday }} - {{ saturday }} </label>
+    </div>
+
+    <div class="main">
+      <label *ngFor="let title of weekArray"> {{title}} </label>
+      <div *ngFor="let item of squares; let i =index">
+        <button
+          *ngIf="(item.isAvilable && i != 6 ) && (item.isAvilable && i != 12 ) && (item.isAvilable && i != 13 ) && (item.isAvilable && i != 19 )"
+          type="button" class="btn btn-outline-secondary " [value]='item' (click)="canceleShift(item,i,squares)">
+          <i class="fas fa-check"> </i>
+        </button>
+        <button
+          *ngIf="(!item.isAvilable && i != 6 ) && (!item.isAvilable && i != 12 ) && (!item.isAvilable && i != 13 ) && (!item.isAvilable && i != 19 )"
+          type="button" class="btn btn-outline-danger " [value]='item' (click)="canceleShift(item,i,squares)">
+          <i class="fas fa-times"></i>
+        </button>
+        <button *ngIf="item.qube == 6 || item.qube == 13 || item.qube ==12 || item.qube == 19"
+          class="button btn-outline-secondary" type="button" disabled>
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="main" *ngIf="numOfWeek == 2">
+      <label *ngFor="let title of weekArray"> {{title}} </label>
+      <div *ngFor="let item of squares2 ; let i =index">
+        <button *ngIf="item.isAvilable" type="button" class="btn btn-outline-secondary " [value]='item'
+          (click)="canceleShift(item,i,squares2)">
+          <i class="fas fa-check"></i>
+        </button>
+        <button *ngIf="!item.isAvilable" type="button" class="btn btn-outline-danger " [value]='item'
+          (click)="canceleShift(item,i,squares2)">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+    </div>
+    <div class="col" style="padding-top:20px ;">
+      <form class="form-signin" [formGroup]="remarksForm" (ngSubmit)="sendRequests()">
+        <div class="form-group">
+          <input class="form-control" name="remarks" formControlName="remarks" placeholder="remarks">
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="card-footer btnPhone" *ngIf="!isUpdate">
+    <button type="button" type="submit" class="button is-primary is-rounded" (click)="sendRequests()">send
+      request</button>
+  </div>
+  <div class="card-footer btnPhone" *ngIf="isUpdate">
+    <button type="button" type="submit" class="button is-primary is-rounded" (click)="updateReq()">update
+      Request</button>
+  </div>
+</div>

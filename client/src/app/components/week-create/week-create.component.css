@@ -1,0 +1,32 @@
+.calender-days {
+  text-align: center;
+  /* width: 60px;
+  height: 60px; */
+  background-color: #67676d;
+  border: 3px #adadcf;
+  color: aliceblue;
+}
+
+#calender {
+  /* width: 462px;; */
+}
+
+.main {
+  text-align: center;
+  display: inline-grid;
+  grid-template-columns: 40px 40px 40px 40px 40px 40px 40px;
+  grid-gap: 1px;
+}
+
+.squares {
+  border: 1px gray solid;
+  height: 35px;
+  width: 35x;
+}
+
+.btnPhone {
+  background-color: transparent;
+  border-top: 1px solid #ededed;
+  align-items: stretch;
+  display: grid;
+}

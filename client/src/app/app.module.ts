@@ -14,6 +14,10 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { UserListComponent } from './components/user-list/user-list.component';
+import { AllWeeksComponent } from './components/all-weeks/all-weeks.component';
+import { SidurListComponent } from './components/sidur-list/sidur-list.component';
+import { WeekCreateComponent } from './components/week-create/week-create.component';
 
 
 
@@ -23,7 +27,11 @@ import { SignupComponent } from './components/signup/signup.component';
     NavbarComponent,
     HomeComponent,
     SigninComponent,
-    SignupComponent
+    SignupComponent,
+    UserListComponent,
+    AllWeeksComponent,
+    SidurListComponent,
+    WeekCreateComponent
   ],
   imports: [
     BrowserModule,

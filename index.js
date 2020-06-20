@@ -10,6 +10,11 @@ const cors = require('cors'); // CORS is a node.js package for providing a Conne
 
 
 const userRoutes = require("./routes/user.routes");
+const sidurRoutes = require("./routes/sidur.routes");
+const weeksRoutes = require("./routes/weeks.routes");
+const shiftsRoutes = require("./routes/shifts.routes");
+
+
 
 // Database Connection
 mongoose.Promise = global.Promise;
@@ -39,6 +44,10 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json()); // parse application/json
 app.use(express.static(__dirname + '/public')); // Provide static directory for frontend
 app.use('/user', userRoutes);
+app.use('/shifts', shiftsRoutes);
+app.use('/weeks', weeksRoutes);
+app.use('/sidur', sidurRoutes);
+
 
 // Connect server to Angular 2 Index.html
 app.get('*', (req, res) => {

@@ -1,0 +1,25 @@
+<div *ngIf="noData">
+  no data ! .....
+</div>
+<div *ngIf="!noData" class="box" style="text-align: center; padding-top: 20px;">
+  <article class="media-center">
+    <label> {{ sunday }} - {{ saturday }} </label>
+    <div class="media-content">
+      <div class="content">
+        <div class="columns is-mobile">
+          <div class="column">
+            <div class="main" dir="rtl">
+              <label *ngFor="let title of weekArray"> {{title}} </label>
+              <div class="squares" *ngFor="let item of sidurData ">
+                <small class="labelQube" *ngFor="let name of item ">
+                  {{name.name}}
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </article>
+</div>

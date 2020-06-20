@@ -1,0 +1,25 @@
+<table class="table table-hover table is-bordered is-striped is-narrow is-hoverable is-fullwidth"
+  style="text-align: center; padding-top: 1rem;">
+  <thead>
+    <tr class="table-primary">
+      <th scope="col">#</th>
+      <th scope="col"> Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">role</th>
+      <th scope="col">state</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr scope="row" *ngFor="let item of users ; let i =index">
+      <td> {{i+1}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.email}}</td>
+      <td>{{item.phone}}</td>
+      <td>{{item.role}}</td>
+      <td *ngIf="item.isDisabeld" (click)="disabledUser(item)"> <i class="fas fa-user-slash"> </i></td>
+      <td *ngIf="!item.isDisabeld" (click)="disabledUser(item)"> <i class="fas fa-user"> </i></td>
+
+    </tr>
+  </tbody>
+</table>

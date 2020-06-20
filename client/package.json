@@ -23,6 +23,7 @@
     "@fortawesome/fontawesome-free-webfonts": "^1.0.9",
     "@ng-bootstrap/ng-bootstrap": "^6.1.0",
     "bootstrap": "^4.5.0",
+    "bulma": "^0.9.0",
     "jquery": "^3.5.1",
     "moment": "^2.27.0",
     "rxjs": "~6.5.4",

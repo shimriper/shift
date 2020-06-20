@@ -5,7 +5,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
-
+import { UserListComponent } from './components/user-list/user-list.component';
+import { AllWeeksComponent } from './components/all-weeks/all-weeks.component';
+import { SidurListComponent } from './components/sidur-list/sidur-list.component';
+import { WeekCreateComponent } from './components/week-create/week-create.component';
 import { AuthGuard } from '../app/services/auth.guard';
 
 
@@ -14,11 +17,10 @@ const routes: Routes = [
   { path: 'login', component: SigninComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  // { path: 'week-create', component: WeekCreateComponent, canActivate: [AuthGuard] },
-  // { path: 'all-weeks', component: AllWeeksComponent, canActivate: [AuthGuard] },
-  // { path: 'all-shift-req', component: AllShiftReqComponent, canActivate: [AuthGuard] },
-  // { path: 'sidur-list', component: SidurListComponent, canActivate: [AuthGuard] },
-  // { path: 'users-list', component: UsersListComponent, canActivate: [AuthGuard] },
+  { path: 'week-create', component: WeekCreateComponent, canActivate: [AuthGuard] },
+  { path: 'all-weeks', component: AllWeeksComponent, canActivate: [AuthGuard] },
+  { path: 'sidur-list', component: SidurListComponent, canActivate: [AuthGuard] },
+  { path: 'users-list', component: UserListComponent, canActivate: [AuthGuard] },
 
 ];
 
