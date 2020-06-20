@@ -1,0 +1,31 @@
+{
+  "name": "shift",
+  "version": "1.0.0",
+  "description": "shiftboi",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "cd client && ng build --prod --env=prod"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shimriper/shift.git"
+  },
+  "author": "shimri",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shimriper/shift/issues"
+  },
+  "homepage": "https://github.com/shimriper/shift#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.19",
+    "mongoose-unique-validator": "^2.0.3"
+  }
+}
