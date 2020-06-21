@@ -1,6 +1,8 @@
 <form class="form-signin" (submit)="onSignup(authForm)" #authForm="ngForm">
-  <img class="mb-4" src="/docs/4.5/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+  <div class="form-group  text-center mb-3">
+    <img src="../../../assets/Capture.PNG" alt="" width="90" height="90">
+  </div>
+  <h1 class="h3 mb-3 font-weight-normal text-center">Please sign up</h1>
   <div class="form-group">
     <label>Name</label>
     <input class="form-control" type="name" name="name" placeholder="Enter name" ngModel required>
@@ -13,16 +15,11 @@
     <label>Password</label>
     <input type="password" class="form-control" name="password" placeholder="password" ngModel required>
   </div>
-  <div class="checkbox mb-3">
-    <label>
-      <input type="checkbox" value="remember-me"> Remember me
-    </label>
-  </div>
   <div class="form-group">
     <label>Phone</label>
     <input class="form-control" type="Phone" name="Phone" placeholder="Enter Phone" ngModel required>
   </div>
-  <div class="control">
-    <button class="button is-primary is-rounded" type="submit">Sign in</button>
+  <div class="control  btn-block mb-3">
+    <button class="button is-primary is-rounded" type="submit">Sign up</button>
   </div>
 </form>

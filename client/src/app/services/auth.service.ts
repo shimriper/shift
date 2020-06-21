@@ -81,17 +81,16 @@ export class AuthService {
   }
 
 
-  createUser(name: string, email: string, password: string,phone:string) {
+  createUser(name: string, email: string, password: string, phone: string) {
     const api = `${this.endpoint}/signup`;
     const authData: AuthData = {
       name: name,
       email: email,
       password: password,
-      phone:phone
+      phone: phone
     };
-    this.http.post(api, authData).subscribe(response => {
-      console.log(response);
-    });
+    return this.http.post(api, authData)
+      .pipe(catchError(this.errorMgmt));
   }
 
   login(email: string, password: string) {
@@ -114,7 +113,7 @@ export class AuthService {
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
           this.saveAuthData(token, expirationDate, this.userId);
-          this.router.navigate(['/home']);
+          this.router.navigate(['/sidur-list']);
         }
       });
   }

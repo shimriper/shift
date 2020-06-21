@@ -1,0 +1,14 @@
+.bd-placeholder-img {
+  font-size: 1.125rem;
+}
+
+.btn-block {
+  display: grid;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .bd-placeholder-img-lg {
+    font-size: 3.5rem;
+  }
+}
