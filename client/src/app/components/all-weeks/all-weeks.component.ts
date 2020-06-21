@@ -71,12 +71,25 @@ export class AllWeeksComponent implements OnInit {
   getAllReqWeeks() {
     this.weekService.getWeeks().subscribe((data) => {
       const allWeeks = data;
+      // tslint:disable-next-line: forin
       for (var key in allWeeks) {
         for (var i = 0; i < this.squares.length; i++) {
+
           if (allWeeks[key].shifts.length < 1) {
-            this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null });
+            if (i == 6 || i == 12 || i == 13 || i == 19) {
+              this.squares[i].users = null
+              // this.squares[i].users.push({ userId: null, name: null, isAvilable: null, isCheck: null });
+            } else {
+              this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null });
+            }
           } else {
-            this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null });
+            if (i == 6 || i == 12 || i == 13 || i == 19) {
+              this.squares[i].users = null
+
+              // this.squares[i].users.push({ userId: null, name: null, isAvilable: null, isCheck: null });
+            } else {
+              this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null });
+            }
             for (var j = 0; j < allWeeks[key].shifts.length; j++) {
               if (allWeeks[key].shifts[j].qube == this.squares[i].qube) {
                 for (var k = 0; k < this.squares[i].users.length; k++) {

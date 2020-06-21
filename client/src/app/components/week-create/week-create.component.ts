@@ -29,7 +29,7 @@ export class WeekCreateComponent implements OnInit {
   isUpdate = false;
   sunday;
   saturday;
-
+  deleteState = false;
   // currentUser:User;
   squares: any[];
   squares2: any[];
@@ -118,7 +118,9 @@ export class WeekCreateComponent implements OnInit {
         this.weekService.addWeek(this.week).subscribe(res => {
           let weekId = res;
           this.isUpdate = true;
-          this.opensweetalert();
+          if (this.deleteState == false) {
+            this.opensweetalert();
+          }
         });
       });
   }
@@ -198,6 +200,7 @@ export class WeekCreateComponent implements OnInit {
     }).then((result) => {
       this.shiftService.deleteAllReq().
         subscribe(res => {
+          this.deleteState = true;
           this.sendRequests();
         });
       if (result.value) {
