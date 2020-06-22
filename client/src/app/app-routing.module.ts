@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'week-create', component: WeekCreateComponent, canActivate: [AuthGuard] },
-  { path: 'all-weeks', component: AllWeeksComponent, },
+  { path: 'all-weeks', component: AllWeeksComponent, canActivate: [AuthGuard] },
   { path: 'sidur-list', component: SidurListComponent, canActivate: [AuthGuard] },
   { path: 'users-list', component: UserListComponent, canActivate: [AuthGuard] },
   {
