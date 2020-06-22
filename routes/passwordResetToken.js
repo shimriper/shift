@@ -1,3 +1,4 @@
+const env = require('../env');
 const express = require("express");
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
@@ -5,6 +6,7 @@ const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const User = require("../models/user");
 const passwordResetToken = require('../models/passwordResetToken');
+// const {env} = require("process");
 const router = express.Router();
 
 
@@ -55,14 +57,14 @@ router.post('/req-reset-password', async (req, res) => {
                 pass: process.env.GMAIL_PWS
             }
         });
-        console.log(user.email);
+        var link = 'https://warm-everglades-63023.herokuapp.com' + '/response-reset-password/' + resettoken.resettoken;
         var mailOptions = {
             to: user.email,
             from: 'your email',
             subject: 'Node.js Password Reset',
             text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                 'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                'http://localhost:4200/response-reset-password/' + resettoken.resettoken + '\n\n' +
+                link + '\n\n' +
                 'If you did not request this, please ignore this email and your password will remain unchanged.\n'
         }
         transporter.sendMail(mailOptions, (err, info) => {})
