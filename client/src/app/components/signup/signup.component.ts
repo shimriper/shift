@@ -6,28 +6,34 @@ import * as moment from 'moment';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 import { AuthService } from '../../services/auth.service'
+import { Res } from 'src/app/models/res.model';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
+  mobNumberPattern = "^((\\+91-?)|0)?[0-9]{10}$";
 
-  constructor(    // public fb: FormBuilder,
+  constructor(
+    public fb: FormBuilder,
     public authService: AuthService,
     public router: Router) { }
+
   onSignup(form: NgForm) {
-    if (form.invalid) {
-      return;
-    }
     this.authService.createUser(form.value.name, form.value.email, form.value.password, form.value.phone)
-      .subscribe((res) => {
-        if (res) {
+      .subscribe((res: Res) => {
+        if (res.success) {
+          Swal.fire({
+            text: 'you are registered!',
+            icon: 'success'
+          });
           form.reset();
-          this.opensweetalert();
           this.router.navigate(['/login']);
+        } else {
+          this.opensweetalertdng();
         }
-      })
+      });
   }
 
 
@@ -40,7 +46,7 @@ export class SignupComponent implements OnInit {
   // sweet alert
   opensweetalert() {
     Swal.fire({
-      text: 'Sign - up is success!',
+      text: 'Sign - up is succe!',
       icon: 'success'
     });
   }

@@ -74,7 +74,6 @@ export class AllWeeksComponent implements OnInit {
       // tslint:disable-next-line: forin
       for (var key in allWeeks) {
         for (var i = 0; i < this.squares.length; i++) {
-
           if (allWeeks[key].shifts.length < 1) {
             if (i == 6 || i == 12 || i == 13 || i == 19) {
               this.squares[i].users = null
@@ -85,7 +84,6 @@ export class AllWeeksComponent implements OnInit {
           } else {
             if (i == 6 || i == 12 || i == 13 || i == 19) {
               this.squares[i].users = null
-
               // this.squares[i].users.push({ userId: null, name: null, isAvilable: null, isCheck: null });
             } else {
               this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null });
@@ -106,60 +104,69 @@ export class AllWeeksComponent implements OnInit {
   }
 
   changeSidor(i, row, name) {
-    if (row.typeShift == 1) {
-      this.squares[row.qube + 13].users.forEach((item, index) => {
-        if (item.userId == name.userId) {
-          if (name.isCheck == null) {
-            this.squares[row.qube].users[i].isCheck = true;
-            if (row.qube > 0) {
-              this.squares[row.qube + 13].users[index].isCheck = false;
-            }
-            this.squares[row.qube + 7].users[index].isCheck = false;
-          }
-          else if (name.isCheck == true) {
-            this.squares[row.qube].users[i].isCheck = null;
-            if (row.qube > 0) {
-              this.squares[row.qube + 13].users[index].isCheck = null;
-            }
-            this.squares[row.qube + 7].users[index].isCheck = null;
-          }
-        }
-      });
-    } else if (row.typeShift == 2) {
-      this.squares[row.qube + 7].users.forEach((item, index) => {
-        if (item.userId == name.userId) {
-          if (name.isCheck == null) {
-            this.squares[row.qube].users[i].isCheck = true;
-            if (row.qube < 12) {
-              this.squares[row.qube - 7].users[index].isCheck = false;
-              this.squares[row.qube + 7].users[index].isCheck = false;
-            }
-          } else if (name.isCheck == true) {
-            this.squares[row.qube].users[i].isCheck = null;
-            this.squares[row.qube - 7].users[index].isCheck = null;
-            this.squares[row.qube + 7].users[index].isCheck = null;
-          }
-        }
-      });
 
-    } else if (row.typeShift == 3) {
-      this.squares[row.qube - 7].users.forEach((item, index) => {
-        if (item.userId == name.userId) {
-          if (name.isCheck == null) {
-            this.squares[row.qube].users[i].isCheck = true;
-            if (row.qube != 20) {
-              this.squares[row.qube - 7].users[index].isCheck = false;
-              this.squares[row.qube - 13].users[index].isCheck = false;
-            }
-          } else if (name.isCheck == true) {
-            this.squares[row.qube].users[i].isCheck = null;
-            if (row.qube != 20) {
-              this.squares[row.qube - 7].users[index].isCheck = null;
-              this.squares[row.qube - 13].users[index].isCheck = null;
-            }
-          }
+    if (row.typeShift == 1) {
+      //sunday shift boker
+      if (row.qube == 0) {
+        if (name.isCheck == null) {
+          this.squares[row.qube].users[i].isCheck = true;
+          this.squares[row.qube + 7].users[i].isCheck = false;
+        } else if (name.isCheck == true) {
+          this.squares[row.qube].users[i].isCheck = null;
+          this.squares[row.qube + 7].users[i].isCheck = null;
         }
-      });
+      }
+      //fridat shift boker
+      else if (row.qube == 5) {
+        if (name.isCheck == null) {
+          this.squares[row.qube].users[i].isCheck = true;
+          this.squares[row.qube + 13].users[i].isCheck = false;
+        } else if (name.isCheck == true) {
+          this.squares[row.qube].users[i].isCheck = null;
+          this.squares[row.qube + 13].users[i].isCheck = null;
+        }
+      } else {
+        if (name.isCheck == null) {
+          this.squares[row.qube].users[i].isCheck = true;
+          this.squares[row.qube + 13].users[i].isCheck = false;
+          this.squares[row.qube + 7].users[i].isCheck = false;
+        } else if (name.isCheck == true) {
+          this.squares[row.qube].users[i].isCheck = null;
+          this.squares[row.qube + 13].users[i].isCheck = null;
+          this.squares[row.qube + 7].users[i].isCheck = null;
+        }
+      }
+    }
+    else if (row.typeShift == 2) {
+      if (name.isCheck == null) {
+        this.squares[row.qube].users[i].isCheck = true;
+        this.squares[row.qube - 7].users[i].isCheck = false;
+        this.squares[row.qube + 7].users[i].isCheck = false;
+      } else if (name.isCheck == true) {
+        this.squares[row.qube].users[i].isCheck = null;
+        this.squares[row.qube - 7].users[i].isCheck = null;
+        this.squares[row.qube + 7].users[i].isCheck = null;
+      }
+    }
+    else if (row.typeShift == 3) {
+      if (row.qube == 20) {
+        if (name.isCheck == null) {
+          this.squares[row.qube].users[i].isCheck = true;
+        }
+        else if (name.isCheck == true) {
+          this.squares[row.qube].users[i].isCheck = null;
+        }
+      } else {
+        if (name.isCheck == null) {
+          this.squares[row.qube].users[i].isCheck = true;
+          this.squares[row.qube - 13].users[i].isCheck = false;
+          this.squares[row.qube - 7].users[i].isCheck = false;
+        } else if (name.isCheck == true) {
+          this.squares[row.qube].users[i].isCheck = null;
+          this.squares[row.qube - 13].users[i].isCheck = null;
+          this.squares[row.qube - 7].users[i].isCheck = null;
+        }
+      }
     }
   }
 
@@ -214,7 +221,8 @@ export class AllWeeksComponent implements OnInit {
         if (this.squares[i].users[j].isCheck === true) {
           let userObj = {
             userId: this.squares[i].users[j].userId,
-            name: this.squares[i].users[j].name
+            name: this.squares[i].users[j].name,
+            priority: this.squares[i].users[j].priority
           }
           sidurQube.push(userObj);
         }
@@ -231,7 +239,6 @@ export class AllWeeksComponent implements OnInit {
     this.weekService.createSidur(sidurEnd).subscribe(data => {
       this.opensweetalert();
       this.router.navigate(['/sidur-list']);
-
     })
   }
   getWeek(next: number) {

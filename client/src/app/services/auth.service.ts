@@ -11,6 +11,8 @@ import { environment } from '../../environments/environment';
 })
 export class AuthService {
   endpoint = environment.apiUrl + '/user';
+
+  endpointReset = environment.apiUrl + '/resetpassword'
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   // currentUser = {};
   private isAuthenticated = false;
@@ -59,13 +61,6 @@ export class AuthService {
       .pipe(catchError(this.errorMgmt))
   }
 
-  // UpdateStudent(id, data): Observable<any> {
-  //   let API_URL = `${this.endpoint}/disabeldUser/${id}`;
-  //   return this.http.put(API_URL, data, { headers: this.headers })
-  //     .pipe(
-  //       catchError(this.errorMgmt)
-  //     )
-  // }
   // Error handling
   errorMgmt(error: HttpErrorResponse) {
     let errorMessage = '';
@@ -89,8 +84,22 @@ export class AuthService {
       password: password,
       phone: phone
     };
-    return this.http.post(api, authData)
-      .pipe(catchError(this.errorMgmt));
+    return this.http.post(api, authData).pipe(
+      catchError(this.handleError)
+    )
+  }
+
+
+  requestReset(body): Observable<any> {
+    return this.http.post(`${this.endpointReset}/req-reset-password`, body);
+  }
+
+  newPassword(body): Observable<any> {
+
+    return this.http.post(`${this.endpointReset}/new-password`, body);
+  }
+  ValidPasswordToken(body): Observable<any> {
+    return this.http.post(`${this.endpointReset}/valid-password-token`, body);
   }
 
   login(email: string, password: string) {
@@ -176,4 +185,18 @@ export class AuthService {
       userId
     };
   }
+
+  // Error
+  handleError(error: HttpErrorResponse) {
+    let msg = '';
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      msg = error.error.message;
+    } else {
+      // server-side error
+      msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    return throwError(msg);
+  }
+
 }

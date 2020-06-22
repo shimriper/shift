@@ -18,6 +18,8 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { AllWeeksComponent } from './components/all-weeks/all-weeks.component';
 import { SidurListComponent } from './components/sidur-list/sidur-list.component';
 import { WeekCreateComponent } from './components/week-create/week-create.component';
+import { RequestResetPasswordComponent } from './components/request-reset-password/request-reset-password.component';
+import { ResponseResetPasswordComponent } from './components/response-reset-password/response-reset-password.component';
 
 
 
@@ -31,7 +33,9 @@ import { WeekCreateComponent } from './components/week-create/week-create.compon
     UserListComponent,
     AllWeeksComponent,
     SidurListComponent,
-    WeekCreateComponent
+    WeekCreateComponent,
+    RequestResetPasswordComponent,
+    ResponseResetPasswordComponent
   ],
   imports: [
     BrowserModule,

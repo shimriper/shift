@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const checkAuth = require("../middleware/check-auth");
 
+
 const router = express.Router();
 
 router.post("/signup", (req, res, next) => {
@@ -18,19 +19,23 @@ router.post("/signup", (req, res, next) => {
         });
         user
             .save()
-            .then((result) => {
-                res.sendStatus(200).json({
-                    message: "User created",
-                    result: result,
+            .then((response) => {
+                res.status(201).json({
+                    success: true,
+                    message: "User successfully created!",
+                    result: response
                 });
             })
             .catch((err) => {
                 res.status(500).json({
-                    error: err,
+                    success: false,
+                    message: "User not created!",
+                    result: err
                 });
             });
     });
 });
+
 
 router.post("/login", (req, res, next) => {
     let fetchedUser;
@@ -40,12 +45,14 @@ router.post("/login", (req, res, next) => {
         .then((user) => {
             if (!user) {
                 return res.status(401).json({
-                    message: "Auth failed",
+                    success: false,
+                    message: "Auth failed"
                 });
             }
             if (user.isDisabeld) {
                 return res.status(401).json({
-                    message: "user is disabeled",
+                    success: false,
+                    message: "user is disabeled"
                 });
             }
             fetchedUser = user;
@@ -54,18 +61,21 @@ router.post("/login", (req, res, next) => {
         .then((result) => {
             if (!result) {
                 return res.status(401).json({
+                    success: false,
                     message: "Auth failed",
+                    result: result
                 });
             }
             const token = jwt.sign({
                     email: fetchedUser.email,
                     userId: fetchedUser._id
                 },
-                "secret_this_should_be_longer", {
+                process.env.JWT, {
                     expiresIn: "1h"
                 }
             );
             res.status(200).json({
+                success: true,
                 token: token,
                 expiresIn: 3600,
                 userId: fetchedUser._id,
@@ -74,37 +84,44 @@ router.post("/login", (req, res, next) => {
         })
         .catch((err) => {
             return res.status(401).json({
+                success: false,
                 message: "Auth failed",
+                result: err
             });
         });
 });
 
+
+
 // getAllByStartDate
 router.get("/getAllUsers", (req, res) => {
-    User.find({}).exec(function (err, users) {
-        if (err) {
-            // res.send(err);
-            console.log(err);
-        } else {
-            console.log(users);
-            res.json(users);
-        }
-    });
+    User.find({})
+        .sort({
+            priority: 1
+        }).exec(function (err, users) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(users);
+                res.json(users);
+            }
+        });
 });
 
 // getAllByStartDate
 router.get("/getUserById", checkAuth, (req, res) => {
     User.find({
-        _id: req.userData.userId
-    }).exec(function (err, user) {
-        if (err) {
-            // res.send(err);
-            console.log(err);
-        } else {
-            console.log(user);
-            res.json(user);
-        }
-    });
+            _id: req.userData.userId
+        })
+        .exec(function (err, user) {
+            if (err) {
+                // res.send(err);
+                console.log(err);
+            } else {
+                console.log(user);
+                res.json(user);
+            }
+        });
 });
 
 // Update user /update-user/' + id
@@ -117,10 +134,8 @@ router.put("/update-user/:id", checkAuth, (req, res, next) => {
         (error, data) => {
             if (error) {
                 return next(error);
-                console.log(error);
             } else {
                 res.json(data);
-                console.log("user disabled successfully!");
             }
         }
     );

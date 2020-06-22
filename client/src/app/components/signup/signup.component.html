@@ -17,7 +17,10 @@
   </div>
   <div class="form-group">
     <label>Phone</label>
-    <input class="form-control" type="Phone" name="Phone" placeholder="Enter Phone" ngModel required>
+    <input class="form-control" name="mobileNumber" placeholder="Enter Phone" [pattern]="mobNumberPattern" ngModel
+      required>
+
+    <!-- <input class="form-control" type="Phone" name="Phone" placeholder="Enter Phone" ngModel required> -->
   </div>
   <div class="control  btn-block mb-3">
     <button class="button is-primary is-rounded" type="submit">Sign up</button>
