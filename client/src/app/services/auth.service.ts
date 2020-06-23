@@ -144,7 +144,8 @@ export class AuthService {
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          this.saveAuthData(token, expirationDate, this.userId);
+          const u_id = response.userId;
+          this.saveAuthData(token, expirationDate, u_id);
           this.router.navigate(['/sidur-list']);
         }
       });
