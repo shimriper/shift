@@ -50,12 +50,35 @@ export class AuthService {
     return this.http.put(this.endpoint + '/disabeldUser/' + id, id);
   }
 
+    // Update employee
+    updateUser_i(id, data): Observable<any> {
+      let url = `${this.endpoint}/update/${id}`;
+      return this.http.put(url, data, { headers: this.headers }).pipe(
+        catchError(this.errorMgmt)
+      )
+    }
+
+
+
+
   // Update student
   UpdateUser(id, data) {
     this.http.put(this.endpoint + "/update-user/" + id, data).subscribe(response => {
       console.log(response);
     });
   }
+ // Get User
+ getUser(id): Observable<any> {
+  let url = `${this.endpoint}/read/${id}`;
+  return this.http.get(url, {headers: this.headers}).pipe(
+    map((res: Response) => {
+      return res || {}
+    }),
+    catchError(this.errorMgmt)
+  )
+}
+
+
   getUserById() {
     return this.http.get(`${this.endpoint}/getUserById`)
       .pipe(catchError(this.errorMgmt))

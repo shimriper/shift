@@ -17,6 +17,8 @@ import { WeekService } from 'src/app/services/week.service';
   styleUrls: ['./all-weeks.component.css']
 })
 export class AllWeeksComponent implements OnInit {
+  active = 'top';
+  allRemarksByUsers = [];
   users = [];
   sidur = [];
   form: FormGroup;
@@ -73,6 +75,10 @@ export class AllWeeksComponent implements OnInit {
       const allWeeks = data;
       // tslint:disable-next-line: forin
       for (var key in allWeeks) {
+        if (allWeeks[key].remarks.length > 0) {
+          this.allRemarksByUsers.push({ name: allWeeks[key].creator.name, remark: allWeeks[key].remarks });
+        }
+
         for (var i = 0; i < this.squares.length; i++) {
           if (allWeeks[key].shifts.length < 1) {
             if (i == 6 || i == 12 || i == 13 || i == 19) {

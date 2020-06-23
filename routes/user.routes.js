@@ -108,6 +108,33 @@ router.get("/getAllUsers", (req, res) => {
         });
 });
 
+
+// Get single user
+router.get('/read/:id', checkAuth, (req, res) => {
+    User.findById(req.params.id, (error, data) => {
+        if (error) {
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+// Update User
+router.put('/update/:id', checkAuth, (req, res, next) => {
+    User.findByIdAndUpdate(req.params.id, {
+        $set: req.body
+    }, (error, data) => {
+        if (error) {
+            return next(error);
+            console.log(error)
+        } else {
+            res.json(data)
+            console.log('Data updated successfully')
+        }
+    })
+})
+
 // getAllByStartDate
 router.get("/getUserById", checkAuth, (req, res) => {
     User.find({

@@ -10,13 +10,12 @@ const port = process.env.PORT || 3000; // Allows heroku to set port
 const cors = require('cors'); // CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
 const cookieParser = require('cookie-parser');
 
-
 const userRoutes = require("./routes/user.routes");
 const sidurRoutes = require("./routes/sidur.routes");
 const weeksRoutes = require("./routes/weeks.routes");
 const shiftsRoutes = require("./routes/shifts.routes");
 const passwordResetTokenRoutes = require("./routes/passwordResetToken");
-
+const smsRoutes = require('./routes/sms.routes');
 
 
 
@@ -45,11 +44,15 @@ app.use(bodyParser.urlencoded({
 })); // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()); // parse application/json
 app.use(express.static(__dirname + '/public')); // Provide static directory for frontend
+
+
 app.use('/user', userRoutes);
 app.use('/shifts', shiftsRoutes);
 app.use('/weeks', weeksRoutes);
 app.use('/sidur', sidurRoutes);
 app.use('/resetpassword', passwordResetTokenRoutes);
+app.use('/sms', smsRoutes);
+
 
 
 

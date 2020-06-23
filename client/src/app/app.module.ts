@@ -9,7 +9,7 @@ import { AuthInterceptor } from './services/auth-interceptor';
 
 
 // paaaaa
-import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbPaginationModule, NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { SigninComponent } from './components/signin/signin.component';
@@ -20,6 +20,8 @@ import { SidurListComponent } from './components/sidur-list/sidur-list.component
 import { WeekCreateComponent } from './components/week-create/week-create.component';
 import { RequestResetPasswordComponent } from './components/request-reset-password/request-reset-password.component';
 import { ResponseResetPasswordComponent } from './components/response-reset-password/response-reset-password.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { MyProfileComponent } from './components/my-profile/my-profile.component';
 
 
 
@@ -35,7 +37,9 @@ import { ResponseResetPasswordComponent } from './components/response-reset-pass
     SidurListComponent,
     WeekCreateComponent,
     RequestResetPasswordComponent,
-    ResponseResetPasswordComponent
+    ResponseResetPasswordComponent,
+    UserEditComponent,
+    MyProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -45,6 +49,7 @@ import { ResponseResetPasswordComponent } from './components/response-reset-pass
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+    NgbModule,
 
   ],
   providers: [

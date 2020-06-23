@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
+import { SmsService } from 'src/app/services/sms.service';
 
 @Component({
   selector: 'app-user-list',
@@ -8,10 +9,17 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class UserListComponent implements OnInit {
   users;
-  constructor(public authService: AuthService) { }
+  constructor(public authService: AuthService,
+    public smsService: SmsService) { }
 
   ngOnInit(): void {
     this.getAllUsers();
+  }
+
+  sendSms(user) {
+    this.smsService.sendSms(user).subscribe(data => {
+      console.log(data);
+    })
   }
 
   getAllUsers() {

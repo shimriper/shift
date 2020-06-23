@@ -1,4 +1,3 @@
-
 <div class="box" style="text-align: center; padding-top: 20px;">
   <article class="media-center">
     <div class="media-content">
@@ -32,4 +31,18 @@
       </div>
     </div>
   </article>
+</div>
+
+
+
+
+<div class="box" style="text-align: center; padding-top: 20px;">
+  <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let item of allRemarksByUsers; let i=index">
+    <ngb-panel id="i" title="{{item.name}}" style="text-align: center;">
+      <ng-template ngbPanelContent>
+        {{item.remark}}
+      </ng-template>
+    </ngb-panel>
+
+  </ngb-accordion>
 </div>
