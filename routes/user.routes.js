@@ -108,9 +108,20 @@ router.get("/getAllUsers", (req, res) => {
         });
 });
 
-
+// Delete user
+router.delete('/delete/:id', checkAuth, (req, res, next) => {
+    User.findOneAndRemove(req.params.id, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.status(200).json({
+                msg: data
+            })
+        }
+    })
+})
 // Get single user
-router.get('/read/:id', checkAuth, (req, res) => {
+router.get('/read/:id', checkAuth, (req, res,next) => {
     User.findById(req.params.id, (error, data) => {
         if (error) {
             return next(error)

@@ -12,7 +12,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 export class MyProfileComponent implements OnInit {
   submitted = false;
   editForm: FormGroup;
-
+  userId: string;
   constructor(
     public fb: FormBuilder,
     private actRoute: ActivatedRoute,
@@ -20,14 +20,17 @@ export class MyProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.updateUser();
-    let id = this.authService.getUserId();
-    this.getUser(id);
-    this.editForm = this.fb.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-    })
+    if (this.authService.getIsAuth()) {
+      this.userId = this.authService.getUserId();
+
+      this.updateUser();
+      this.getUser(this.userId);
+      this.editForm = this.fb.group({
+        name: ['', [Validators.required]],
+        email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+        phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      })
+    }
   }
 
   // Getter to access form control
@@ -55,8 +58,7 @@ export class MyProfileComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (window.confirm('Are you sure?')) {
-      let id = this.actRoute.snapshot.paramMap.get('id');
-      this.authService.updateUser_i(id, this.editForm.value)
+      this.authService.updateUser_i(this.userId, this.editForm.value)
         .subscribe(res => {
           console.log('Content updated successfully!')
         }, (error) => {

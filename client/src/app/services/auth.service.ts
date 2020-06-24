@@ -33,10 +33,12 @@ export class AuthService {
     return this.token;
   }
   getUserId() {
+    // const userId = localStorage.getItem('userID');
     return this.userId;
   }
 
   getIsAuth() {
+    this.autoAuthUser();
     return this.isAuthenticated;
   }
 
@@ -50,13 +52,13 @@ export class AuthService {
     return this.http.put(this.endpoint + '/disabeldUser/' + id, id);
   }
 
-    // Update employee
-    updateUser_i(id, data): Observable<any> {
-      let url = `${this.endpoint}/update/${id}`;
-      return this.http.put(url, data, { headers: this.headers }).pipe(
-        catchError(this.errorMgmt)
-      )
-    }
+  // Update employee
+  updateUser_i(id, data): Observable<any> {
+    let url = `${this.endpoint}/update/${id}`;
+    return this.http.put(url, data, { headers: this.headers }).pipe(
+      catchError(this.errorMgmt)
+    )
+  }
 
 
 
@@ -67,16 +69,16 @@ export class AuthService {
       console.log(response);
     });
   }
- // Get User
- getUser(id): Observable<any> {
-  let url = `${this.endpoint}/read/${id}`;
-  return this.http.get(url, {headers: this.headers}).pipe(
-    map((res: Response) => {
-      return res || {}
-    }),
-    catchError(this.errorMgmt)
-  )
-}
+  // Get User
+  getUser(id): Observable<any> {
+    let url = `${this.endpoint}/read/${id}`;
+    return this.http.get(url, { headers: this.headers }).pipe(
+      map((res: Response) => {
+        return res || {}
+      }),
+      catchError(this.errorMgmt)
+    )
+  }
 
 
   getUserById() {
@@ -98,6 +100,13 @@ export class AuthService {
     return throwError(errorMessage);
   }
 
+  // Delete User
+  deleteUser(id): Observable<any> {
+    let url = `${this.endpoint}/delete/${id}`;
+    return this.http.delete(url, { headers: this.headers }).pipe(
+      catchError(this.errorMgmt)
+    )
+  }
 
   createUser(name: string, email: string, password: string, phone: string) {
     const api = `${this.endpoint}/signup`;
@@ -134,8 +143,11 @@ export class AuthService {
     this.http.post<{ token: string, expiresIn: number, userId: string, role: string }>(api, authData)
       .subscribe(response => {
         const token = response.token;
+        const u_id = response.userId;
+        this.userId = response.userId;
         this.token = token;
         this.rule = response.role;
+        const role = response.role;
         if (token) {
           const expiresInDuration = response.expiresIn;
           this.setAuthTimer(expiresInDuration);
@@ -144,8 +156,7 @@ export class AuthService {
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          const u_id = response.userId;
-          this.saveAuthData(token, expirationDate, u_id);
+          this.saveAuthData(token, expirationDate, u_id, role);
           this.router.navigate(['/sidur-list']);
         }
       });
@@ -163,6 +174,7 @@ export class AuthService {
       this.token = authInformation.token;
       this.isAuthenticated = true;
       this.userId = authInformation.userId;
+      this.rule = authInformation.role;
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
     }
@@ -172,6 +184,8 @@ export class AuthService {
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     this.userId = null;
+    this.rule = null;
+
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.router.navigate(['/login']);
@@ -183,30 +197,35 @@ export class AuthService {
     }, duration * 1000);
   }
 
-  private saveAuthData(token: string, expirationDate: Date, userId: string) {
+  private saveAuthData(token: string, expirationDate: Date, userId: string, role: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('userId', userId);
-
+    localStorage.setItem('role', role);
   }
 
   private clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
+    localStorage.removeItem('role');
+
   }
 
   private getAuthData() {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
-    const userId = localStorage.getItem('userID');
+    const userId = localStorage.getItem('userId');
+    const role = localStorage.getItem('role');
+
     if (!token || !expirationDate) {
       return;
     }
     return {
       token,
       expirationDate: new Date(expirationDate),
-      userId
+      userId,
+      role
     };
   }
 
