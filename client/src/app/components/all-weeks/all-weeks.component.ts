@@ -223,16 +223,19 @@ export class AllWeeksComponent implements OnInit {
   saveSidur() {
     for (var i = 0; i < this.squares.length; i++) {
       var sidurQube = [];
-      for (var j = 0; j < this.squares[i].users.length; j++) {
-        if (this.squares[i].users[j].isCheck === true) {
-          let userObj = {
-            userId: this.squares[i].users[j].userId,
-            name: this.squares[i].users[j].name,
-            priority: this.squares[i].users[j].priority
+      if (this.squares[i].users != null) {
+        for (var j = 0; j < this.squares[i].users.length; j++) {
+          if (this.squares[i].users[j].isCheck === true) {
+            let userObj = {
+              userId: this.squares[i].users[j].userId,
+              name: this.squares[i].users[j].name,
+              priority: this.squares[i].users[j].priority
+            }
+            sidurQube.push(userObj);
           }
-          sidurQube.push(userObj);
         }
       }
+
       this.sidur[i] = sidurQube;
     }
     var days = this.getWeek(1);

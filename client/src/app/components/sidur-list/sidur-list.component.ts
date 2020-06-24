@@ -37,12 +37,8 @@ export class SidurListComponent implements OnInit {
   getMySidurByDates() {
     var startDay = this.getWeek(1);
     this.weekService.getSidurByDate(startDay.sunday, startDay.saturday).subscribe(data => {
-      if (data[0] > 0) {
-        var id = data[0]._id;
-        this.sidurData = data[0].qubes;
-        this.noData = false;
-      }
-
+      var id = data[0]._id;
+      this.sidurData = data[0].qubes;
     });
   }
 
