@@ -20,9 +20,7 @@ router.post("", checkAuth, (req, res) => {
             }
             res.status(200).json(ids);
         })
-        .catch(function (error) {
-            console.log(error); // Failure
-        });
+        .catch(function (error) {});
 });
 
 // getAllByStartDate
@@ -33,10 +31,8 @@ router.get("/getAllByStartDate", (req, res) => {
         })
         .exec(function (err, shifts) {
             if (err) {
-                // res.send(err);
-                console.log(err);
+                res.send(err);
             } else {
-                console.log(shifts);
                 res.json(shifts);
             }
         });
@@ -102,7 +98,6 @@ router.delete("/deleteAllReq", checkAuth, (req, res, next) => {
         creator: req.userData.userId
     }).then((result) => {
         if (result.n > 0) {
-            console.log("Week delete successful!");
             res.status(200).json({
                 message: "Week delete successful!"
             });

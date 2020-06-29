@@ -25,7 +25,7 @@ router.delete("/deleteWeek", checkAuth, (req, res) => {
         creator: req.userData.userId
     }).then((result) => {
         if (result) {
-            console.log("Week delete successful!");
+            // console.log("Week delete successful!");
             res.status(200).json({
                 message: "Week delete successful!"
             });
@@ -67,7 +67,7 @@ router.get("/getAllByStartDate", (req, res) => {
             if (err) {
                 return next(err)
             } else {
-                console.log(weeks);
+                // console.log(weeks);
                 res.json(weeks);
             }
         });

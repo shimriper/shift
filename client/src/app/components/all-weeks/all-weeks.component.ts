@@ -44,6 +44,7 @@ export class AllWeeksComponent implements OnInit {
     this.fillWeek(this.squares);
     this.getAllReqWeeks();
     this.getAllUsers();
+    this.getLastSat();
   }
 
   fillWeek(squares) {
@@ -259,6 +260,18 @@ export class AllWeeksComponent implements OnInit {
       sunday: sunday,
       saturday: saturday
     }
+  }
+
+  getLastSat() {
+    var Sat = moment().add(-1, 'week').endOf('week');
+    var San = moment().add(-1, 'week').startOf('week');
+
+    this.weekService.getLastSidur(San, Sat).subscribe((res: []) => {
+      console.log(res);
+
+      if (res.length > 0) {
+      }
+    })
   }
 
   opensweetalert() {

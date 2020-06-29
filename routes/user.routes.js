@@ -99,10 +99,7 @@ router.get("/getAllUsers", (req, res) => {
         .sort({
             priority: 1
         }).exec(function (err, users) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(users);
+            if (err) {} else {
                 res.json(users);
             }
         });
@@ -121,7 +118,7 @@ router.delete('/delete/:id', checkAuth, (req, res, next) => {
     })
 })
 // Get single user
-router.get('/read/:id', checkAuth, (req, res,next) => {
+router.get('/read/:id', checkAuth, (req, res, next) => {
     User.findById(req.params.id, (error, data) => {
         if (error) {
             return next(error)
@@ -138,10 +135,8 @@ router.put('/update/:id', checkAuth, (req, res, next) => {
     }, (error, data) => {
         if (error) {
             return next(error);
-            console.log(error)
         } else {
             res.json(data)
-            console.log('Data updated successfully')
         }
     })
 })
@@ -153,10 +148,8 @@ router.get("/getUserById", checkAuth, (req, res) => {
         })
         .exec(function (err, user) {
             if (err) {
-                // res.send(err);
-                console.log(err);
+                res.send(err);
             } else {
-                console.log(user);
                 res.json(user);
             }
         });
@@ -164,7 +157,6 @@ router.get("/getUserById", checkAuth, (req, res) => {
 
 // Update user /update-user/' + id
 router.put("/update-user/:id", checkAuth, (req, res, next) => {
-    console.log(req.body);
     User.findByIdAndUpdate(
         req.params.id, {
             $set: req.body,

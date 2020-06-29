@@ -36,7 +36,14 @@ export class WeekService {
     return this.http.delete(`${this.endpoint}/deleteWeek`);
   }
 
+  getAllSidurs() {
+    return this.http.get(`${this.server}/allSidurs`);
+  }
 
+  getLastSidur(start, end) {
+
+    return this.http.get(`${this.server}/getLastSidur/` + start + '/' + end);
+  }
 
   //sidur!!!!!
   createSidur(sidur): Observable<Week> {

@@ -3,6 +3,7 @@ import * as moment from 'moment';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { WeekService } from 'src/app/services/week.service';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-sidur-list',
@@ -15,9 +16,18 @@ export class SidurListComponent implements OnInit {
   sidur;
   sidurData;
   userId;
+  isUpdate: boolean = false;
   noData: boolean = true;
+  closeResult: string;
+  sidurs = [];
+
+
   constructor(public weekService: WeekService,
-    public authService: AuthService) { }
+    public authService: AuthService,
+    config: NgbModalConfig, private modalService: NgbModal) {
+    // config.backdrop = 'static';
+    // config.keyboard = false;
+  }
 
   public weekArray = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'];
 
@@ -35,18 +45,33 @@ export class SidurListComponent implements OnInit {
   }
 
   getMySidurByDates() {
-    var startDay = this.getWeek(1);
-    this.weekService.getSidurByDate(startDay.sunday, startDay.saturday).subscribe(data => {
+    var startDay = this.getWeek(0);
+    var sunday = moment().startOf('week').format();
+    var saturday = moment().endOf('week').format();
+
+    this.weekService.getSidurByDate(sunday, saturday).subscribe(data => {
       var id = data[0]._id;
       this.sidurData = data[0].qubes;
     });
   }
 
+  getAllSidurs() {
+    this.weekService.getAllSidurs().subscribe((data: []) => {
+      this.sidurs = data;
+      console.log(data)
+    })
+  }
 
+  updateQube(item) {
+    this.isUpdate = true
+    console.log(item);
+    // this.modalService.open(content);
+  }
 
 
   ngOnInit(): void {
     this.getMySidurByDates();
+    this.getAllSidurs();
   }
 
 }
