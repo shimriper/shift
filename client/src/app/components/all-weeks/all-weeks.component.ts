@@ -70,6 +70,7 @@ export class AllWeeksComponent implements OnInit {
   getAllReqWeeks() {
     this.weekService.getWeeks().subscribe((data) => {
       const allWeeks = data;
+      console.log(allWeeks);
       // tslint:disable-next-line: forin
       for (var key in allWeeks) {
         if (allWeeks[key].remarks.length > 0) {

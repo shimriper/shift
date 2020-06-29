@@ -51,6 +51,7 @@ export class WeekCreateComponent implements OnInit {
   }
   changeOption(e) {
     this.numOfWeek = e.target.value;
+
   }
 
   createWeek() {
@@ -62,6 +63,7 @@ export class WeekCreateComponent implements OnInit {
     this.fillWeek(this.squares);
   }
 
+  
   canceleShift(shift, i, week) {
     if (this.isUpdate) {
       this.shifts = this.shiftLast;
@@ -79,27 +81,24 @@ export class WeekCreateComponent implements OnInit {
     }
   }
 
-  getMyShiftsReq(nextWeek: number) {
-    var startDay = this.getWeek(nextWeek);
-    this.shiftService.getMyShiftsByDate(startDay.sunday, startDay.saturday)
-      .subscribe(data => {
-        this.shiftLast = data;
-        if (this.shiftLast.length > 0) {
-          this.isUpdate = true;
-          this.fillArrByLastReq(this.shiftLast);
-        } else {
-          this.weekService.getWeekByCreator()
-            .subscribe(data => {
-              if (data) {
-                this.isUpdate = true;
-                console.log(data)
-                const lastweek = data;
-              }
-            })
-        }
-      });
+  getMyWeek() {
+    this.weekService.getWeekByCreator().subscribe((data: { message, data }) => {
+      if (data.message) {
+        this.isUpdate = false;
+      } else {
+        this.remarksForm.setValue({
+          remarks: data['remarks']
+        })
+        this.isUpdate = true;
+        var startDay = this.getWeek(1);
+        this.shiftService.getMyShiftsByDate(startDay.sunday, startDay.saturday)
+          .subscribe(res => {
+            this.shiftLast = res;
+            this.fillArrByLastReq(this.shiftLast);
+          })
+      }
+    })
   }
-
   sendRequests() {
     var remark = this.remarksForm.value;
     this.shiftService.addShift(this.shifts)
@@ -159,11 +158,11 @@ export class WeekCreateComponent implements OnInit {
     var sunday = moment().add(1, 'week').day(date);
     return sunday;
   }
-
   ngOnInit(): void {
+    this.getMyWeek();
     this.createWeek();
-    this.getWeek(1);
-    this.getMyShiftsReq(1);
+    // this.getWeek(1);
+    // this.getMyShiftsReq(1);
   }
 
   fillArrByLastReq(shiftLast) {
@@ -173,7 +172,39 @@ export class WeekCreateComponent implements OnInit {
   }
 
   updateReq() {
-    this.opensweetalertcst();
+
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to recover this imaginary file!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, keep it'
+    }).then((result) => {
+      this.shiftService.deleteAllReq().
+        subscribe(res => {
+          this.deleteState = true;
+          this.weekService.deleteWeek().subscribe(res => {
+            this.sendRequests();
+          })
+        });
+
+      if (result.value) {
+        Swal.fire(
+          'Deleted!',
+          'Your imaginary file has been deleted.',
+          'success'
+        )
+
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelled',
+          'Your imaginary file is safe :)',
+          'error'
+        )
+      }
+    })
   }
 
 
@@ -200,8 +231,10 @@ export class WeekCreateComponent implements OnInit {
     }).then((result) => {
       this.shiftService.deleteAllReq().
         subscribe(res => {
-          this.deleteState = true;
-          this.sendRequests();
+          this.weekService.deleteWeek().subscribe(res => {
+            this.sendRequests();
+            this.deleteState = true;
+          })
         });
       if (result.value) {
         Swal.fire(

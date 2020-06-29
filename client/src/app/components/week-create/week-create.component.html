@@ -18,7 +18,7 @@
     </div>
 
     <div class="main">
-      <label *ngFor="let title of weekArray"> {{title}} </label>
+      <label *ngFor="let title of weekArray; let i= index"> {{title}} </label>
       <div *ngFor="let item of squares; let i =index">
         <button
           *ngIf="(item.isAvilable && i != 6 ) && (item.isAvilable && i != 12 ) && (item.isAvilable && i != 13 ) && (item.isAvilable && i != 19 )"

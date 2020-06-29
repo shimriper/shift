@@ -21,7 +21,7 @@ router.post("", checkAuth, (req, res, next) => {
 });
 
 router.delete("/deleteWeek", checkAuth, (req, res) => {
-    Week.delete({
+    Week.deleteOne({
         creator: req.userData.userId
     }).then((result) => {
         if (result) {
@@ -36,10 +36,26 @@ router.delete("/deleteWeek", checkAuth, (req, res) => {
         }
     });
 });
+// 
+// Week.findOneAndDelete({
+//     creator: req.userData.userId
+// }).then((result) => {
+//     if (result.n != null) {
+//         res
+//             .status(200)
+//             .json({
+//                 message: "shifts and Week delete successful!"
+//             });
+//     } else {
+//         res.status(200).json({
+//             message: "Not  Authorized!"
+//         });
+//     }
+// });
+// 
 
 // getAllByStartDate
 router.get("/getAllByStartDate", (req, res) => {
-    console.log("getAllByStartDate");
     Week.find({})
         .populate({
             path: "creator"
@@ -49,8 +65,7 @@ router.get("/getAllByStartDate", (req, res) => {
         })
         .exec(function (err, weeks) {
             if (err) {
-                // res.send(err);
-                console.log(err);
+                return next(err)
             } else {
                 console.log(weeks);
                 res.json(weeks);
@@ -99,9 +114,9 @@ router.get("/getWeekByCreator", checkAuth, (req, res) => {
         creator: req.userData.userId
     }).then((week) => {
         if (week) {
-            res.status(200).json(week);
+            res.json(week);
         } else {
-            res.status(404).json({
+            res.json({
                 message: "week not found!"
             });
         }

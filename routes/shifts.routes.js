@@ -88,9 +88,11 @@ router.get("/getMyShifts/:start/:end", checkAuth, (req, res) => {
         },
     }).exec(function (err, shifts) {
         if (err) {
-            console.log(err);
+            res.json({
+                message: "err" + err
+            })
         } else {
-            res.json(shifts);
+            res.status(200).json(shifts);
         }
     });
 });
@@ -100,20 +102,9 @@ router.delete("/deleteAllReq", checkAuth, (req, res, next) => {
         creator: req.userData.userId
     }).then((result) => {
         if (result.n > 0) {
-            Week.findOneAndDelete({
-                creator: req.userData.userId
-            }).then((result) => {
-                if (result.n > 0) {
-                    res
-                        .status(200)
-                        .json({
-                            message: "shifts and Week delete successful!"
-                        });
-                } else {
-                    res.status(200).json({
-                        message: "Not  Authorized!"
-                    });
-                }
+            console.log("Week delete successful!");
+            res.status(200).json({
+                message: "Week delete successful!"
             });
         } else {
             res.status(200).json({
