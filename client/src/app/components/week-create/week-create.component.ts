@@ -25,7 +25,8 @@ export class WeekCreateComponent implements OnInit {
   changeShift: Shift[] = [];
   shifts: Shift[] = [];
   chooseOption = [1, 2];
-  // shift_saved: Shift[] = [];
+
+  shiftsId;
   isUpdate = false;
   sunday;
   saturday;
@@ -63,7 +64,7 @@ export class WeekCreateComponent implements OnInit {
     this.fillWeek(this.squares);
   }
 
-  
+
   canceleShift(shift, i, week) {
     if (this.isUpdate) {
       this.shifts = this.shiftLast;
@@ -89,6 +90,7 @@ export class WeekCreateComponent implements OnInit {
         this.remarksForm.setValue({
           remarks: data['remarks']
         })
+        this.shiftsId = data;
         this.isUpdate = true;
         var startDay = this.getWeek(1);
         this.shiftService.getMyShiftsByDate(startDay.sunday, startDay.saturday)
@@ -99,11 +101,12 @@ export class WeekCreateComponent implements OnInit {
       }
     })
   }
+
   sendRequests() {
-    var remark = this.remarksForm.value;
     this.shiftService.addShift(this.shifts)
       .subscribe(res => {
         let shiftsIds = res;
+        var remark = this.remarksForm.value;
 
         var days = this.getWeek(1);
         this.week = {
@@ -172,39 +175,8 @@ export class WeekCreateComponent implements OnInit {
   }
 
   updateReq() {
-
-
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'You will not be able to recover this imaginary file!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
-      cancelButtonText: 'No, keep it'
-    }).then((result) => {
-      this.shiftService.deleteAllReq().
-        subscribe(res => {
-          this.deleteState = true;
-          this.weekService.deleteWeek().subscribe(res => {
-            this.sendRequests();
-          })
-        });
-
-      if (result.value) {
-        Swal.fire(
-          'Deleted!',
-          'Your imaginary file has been deleted.',
-          'success'
-        )
-
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Cancelled',
-          'Your imaginary file is safe :)',
-          'error'
-        )
-      }
-    })
+    this.shifts = this.shiftLast;
+    this.opensweetalertcst();
   }
 
 
@@ -231,7 +203,7 @@ export class WeekCreateComponent implements OnInit {
     }).then((result) => {
       this.shiftService.deleteAllReq().
         subscribe(res => {
-          this.weekService.deleteWeek().subscribe(res => {
+          this.weekService.deleteWeek().subscribe(data => {
             this.sendRequests();
             this.deleteState = true;
           })

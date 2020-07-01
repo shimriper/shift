@@ -61,7 +61,13 @@ export class WeekService {
     return this.http.get(`${this.server}/getSidurByDate/` + start + '/' + end);
   }
 
-
+  // Update week
+  updateWeek(id, data): Observable<any> {
+    let url = `${this.endpoint}/update/${id}`;
+    return this.http.put(url, data).pipe(
+      catchError(this.errorHandl)
+    )
+  }
 
   // Error handling
   errorHandl(error) {

@@ -48,7 +48,7 @@ router.get("/allSidurs", checkAuth, (req, res) => {
 
 
 router.get("/getLastSidur/:start/:end", checkAuth, (req, res) => {
-    // var d = new Date(req.params.start);
+    var d = new Date(req.params.start);
     // console.log(d);
     Sidur.findOne({
         start: d

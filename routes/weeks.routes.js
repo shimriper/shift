@@ -154,6 +154,18 @@ router.delete("/:id", checkAuth, (req, res, next) => {
     );
 });
 
-
+// Update week
+router.put("/update/:id", checkAuth, (req, res, next) => {
+    Week.findByIdAndUpdate(req.params.id, {
+        $set: req.body
+    }, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.json(data)
+            console.log('Data updated successfully')
+        }
+    })
+})
 
 module.exports = router;
