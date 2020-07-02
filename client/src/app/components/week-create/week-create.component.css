@@ -15,7 +15,8 @@
   text-align: center;
   display: inline-grid;
   grid-template-columns: 40px 40px 40px 40px 40px 40px;
-  grid-gap: 5px;
+  grid-gap: 6px;
+  grid-row-gap: 4px
 }
 
 .squares {

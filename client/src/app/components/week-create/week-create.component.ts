@@ -168,7 +168,7 @@ export class WeekCreateComponent implements OnInit {
   ngOnInit(): void {
     this.getMyWeek();
     this.createWeek();
-    // this.getWeek(1);
+    this.getWeek(1);
     // this.getMyShiftsReq(1);
   }
 

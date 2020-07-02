@@ -5,7 +5,7 @@
         <div class="columns is-mobile">
           <div class="column">
             <div class="main" dir="rtl">
-              <label *ngFor="let title of weekArray"> {{title}} </label>
+              <label *ngFor="let title of weekArray" style="font-weight:bold;"> {{title}} </label>
               <div class="calender-days" *ngFor="let row of squares ">
                 <div class="squares">
                   <p class="scroll" *ngFor="let item of row.users; let i = index" style="margin-bottom: 0 ">

@@ -53,16 +53,16 @@ export class SidurListComponent implements OnInit {
     var saturday = moment().add(1, 'week').endOf('week').format();
 
     this.weekService.getSidurByDate(sunday, saturday).subscribe(data => {
-      // console.log(data);
+      console.log(data);
       var id = data[0]._id;
       this.sidurData = data[0].qubes;
+      this.sidurData[11].push({ id: '11', name: '' });
     });
   }
 
   getAllSidurs() {
     this.weekService.getAllSidurs().subscribe((data: []) => {
       this.sidurs = data;
-      console.log(data)
     })
   }
 

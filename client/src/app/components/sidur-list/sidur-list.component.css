@@ -16,6 +16,7 @@
   display: inline-grid;
   grid-template-columns: 75px 75px 75px 75px 75px 75px;
   grid-gap: 1px;
+  grid-row-gap: 6px;
 }
 
 .squares {

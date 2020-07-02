@@ -1,6 +1,6 @@
 <div class="card" dir="rtl" style="text-align: center; padding-top: 5px;">
   <div class="card-body ">
-    <h4 class="card-title">Shifts Requests</h4>
+    <h4 class="card-title" style="font-weight:bold;">Shifts Requests</h4>
     <div class="field">
       <!-- <div class="control">
         <div class="select">
@@ -14,23 +14,23 @@
       </div> -->
     </div>
     <div>
-      <label> {{ sunday }} - {{ saturday }} </label>
+      <label style="font-weight:bold;"> {{ sunday }} - {{ saturday }} </label>
     </div>
 
     <div class="main">
-      <label *ngFor="let title of weekArray; let i= index"> {{title}} </label>
+      <label *ngFor="let title of weekArray; let i= index" style="font-weight:bold"> {{title}} </label>
       <div *ngFor="let item of squares; let i =index">
-        <button *ngIf=" (item.isAvilable && i != 11 )  " type="button"
-          class="btn btn-outline-secondary btnWidth" [value]='item' (click)="canceleShift(item,i,squares)">
+        <button *ngIf=" (item.isAvilable && i != 11 )  " type="button" class="btn btn-outline-secondary btnWidth"
+          [value]='item' (click)="canceleShift(item,i,squares)">
           <i class="fas fa-check"> </i>
         </button>
-        <button *ngIf="  (!item.isAvilable && i != 11 ) " type="button"
-          class="btn btn-outline-danger btnWidth " [value]='item' (click)="canceleShift(item,i,squares)">
+        <button *ngIf="  (!item.isAvilable && i != 11 ) " type="button" class="btn btn-outline-danger btnWidth "
+          [value]='item' (click)="canceleShift(item,i,squares)">
           <i class="fas fa-times"></i>
         </button>
-        <button *ngIf=" item.qube ==11" class=" shabat button btn-outline-secondary" type="button">
-          <!-- <i class="fas fa-times"></i> -->ש
-        </button>
+        <!-- <button *ngIf=" item.qube ==11" class=" shabat button btn-outline-secondary" type="button"> -->
+        <label *ngIf=" item.qube == 11" class=" shabat" style="font-weight:bold; padding-top: 7px;"> ש </label>
+        <!-- </button> -->
       </div>
     </div>
 
@@ -47,10 +47,10 @@
         </button>
       </div>
     </div>
-    <div class="col" style="padding-top:20px ;">
+    <div class="col" style="padding-top:20px ; " dir="ltr">
       <form class="form-signin" [formGroup]="remarksForm" (ngSubmit)="sendRequests()">
         <div class="form-group">
-          <input class="form-control" name="remarks" formControlName="remarks" placeholder="remarks">
+          <input class="form-control" name="remarks" formControlName="remarks" placeholder="Notes...">
         </div>
       </form>
     </div>
