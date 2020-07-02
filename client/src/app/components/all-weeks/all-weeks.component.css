@@ -14,8 +14,9 @@
 .main {
   text-align: center;
   display: inline-grid;
-  grid-template-columns: 140px 140px 140px 140px 140px 140px 140px;
+  grid-template-columns: 140px 140px 140px 140px 140px 140px;
   grid-gap: 1px;
+  grid-row-gap: 10px;
 }
 
 .squares {

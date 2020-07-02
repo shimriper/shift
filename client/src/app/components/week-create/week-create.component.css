@@ -14,8 +14,8 @@
 .main {
   text-align: center;
   display: inline-grid;
-  grid-template-columns: 40px 40px 40px 40px 40px 40px 40px;
-  grid-gap: 1px;
+  grid-template-columns: 40px 40px 40px 40px 40px 40px;
+  grid-gap: 5px;
 }
 
 .squares {
@@ -29,4 +29,17 @@
   border-top: 1px solid #ededed;
   align-items: stretch;
   display: grid;
+}
+
+.shabat {
+  background-color: #fff;
+  border-color: #ffffff;
+  /* box-shadow: none; */
+  /* opacity: .5; */
+  color: black;
+}
+
+.btnWidth {
+  width: 42px;
+  height: 42px;
 }

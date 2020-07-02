@@ -14,7 +14,7 @@
 .main {
   text-align: center;
   display: inline-grid;
-  grid-template-columns: 75px 75px 75px 75px 75px 75px 75px;
+  grid-template-columns: 75px 75px 75px 75px 75px 75px;
   grid-gap: 1px;
 }
 

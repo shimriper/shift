@@ -17,7 +17,11 @@ import { WeekService } from 'src/app/services/week.service';
   templateUrl: './week-create.component.html',
   styleUrls: ['./week-create.component.css']
 })
+
+
+
 export class WeekCreateComponent implements OnInit {
+
   remarksForm: FormGroup;
 
   week;
@@ -39,7 +43,7 @@ export class WeekCreateComponent implements OnInit {
 
   userId: string;
 
-  public weekArray = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'];
+  public weekArray = ['א', 'ב', 'ג', 'ד', 'ה', 'ו'];
   constructor(public authService: AuthService,
     public shiftService: ShiftService,
     public weekService: WeekService,
@@ -57,10 +61,10 @@ export class WeekCreateComponent implements OnInit {
 
   createWeek() {
     if (this.numOfWeek == 2) {
-      this.squares2 = Array(21).fill(null);
+      this.squares2 = Array(18).fill(null);
       this.fillWeek(this.squares2);
     }
-    this.squares = Array(21).fill(null);
+    this.squares = Array(18).fill(null);
     this.fillWeek(this.squares);
   }
 
@@ -131,16 +135,16 @@ export class WeekCreateComponent implements OnInit {
   fillWeek(week) {
     for (let i = 0; i < week.length; i++) {
       var date;
-      if (i < 7) {
+      if (i < 6) {
         date = this.getDayDate(i);
         week[i] = { qube: i, day: i + 1, typeShift: 1, isAvilable: true, dateShift: date };
       }
-      else if (i > 6 && i < 14) {
-        date = this.getDayDate(i - 7);
-        week[i] = { qube: i, day: i - 6, typeShift: 2, isAvilable: true, dateShift: date };
+      else if (i > 5 && i < 12) {
+        date = this.getDayDate(i - 6);
+        week[i] = { qube: i, day: i - 5, typeShift: 2, isAvilable: true, dateShift: date };
       } else {
-        date = this.getDayDate(i - 14);
-        week[i] = { qube: i, day: i - 13, typeShift: 3, isAvilable: true, dateShift: date };
+        date = this.getDayDate(i - 12);
+        week[i] = { qube: i, day: i - 11, typeShift: 3, isAvilable: true, dateShift: date };
       }
     }
   }
@@ -198,7 +202,7 @@ export class WeekCreateComponent implements OnInit {
       text: 'You will not be able to recover this imaginary file!',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonText: 'Yes, update it!',
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       this.shiftService.deleteAllReq().
@@ -210,8 +214,8 @@ export class WeekCreateComponent implements OnInit {
         });
       if (result.value) {
         Swal.fire(
-          'Deleted!',
-          'Your imaginary file has been deleted.',
+          'updated!',
+          'Your imaginary file has been updated.',
           'success'
         )
         // For more information about handling dismissals please visit

@@ -7,6 +7,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { WeekService } from 'src/app/services/week.service';
+import { ConstantPool } from '@angular/compiler';
 
 @Component({
   selector: 'app-all-weeks',
@@ -17,6 +18,7 @@ export class AllWeeksComponent implements OnInit {
   active = 'top';
   allRemarksByUsers = [];
   users = [];
+  allUsers;
   sidur = [];
   form: FormGroup;
   sunday;
@@ -33,29 +35,30 @@ export class AllWeeksComponent implements OnInit {
       orders: []
     });
   }
-  public weekArray = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'];
+  public weekArray = ['א', 'ב', 'ג', 'ד', 'ה', 'ו'];
 
   squares: any[];
   squares2: any[];
 
   ngOnInit(): void {
-    this.squares = Array(21).fill(null);
-    this.users = Array(21).fill(null);
+    this.getAllUsers();
+
+    this.squares = Array(18).fill(null);
+    this.users = Array(18).fill(null);
     this.fillWeek(this.squares);
     this.getAllReqWeeks();
-    this.getAllUsers();
     this.getLastSat();
   }
 
   fillWeek(squares) {
     for (let i = 0; i < squares.length; i++) {
-      if (i < 7) {
+      if (i < 6) {
         squares[i] = { qube: i, day: i + 1, typeShift: 1, users: [] };
       }
-      else if (i > 6 && i < 14) {
-        squares[i] = { qube: i, day: i - 6, typeShift: 2, users: [] };
+      else if (i > 5 && i < 12) {
+        squares[i] = { qube: i, day: i - 5, typeShift: 2, users: [] };
       } else {
-        squares[i] = { qube: i, day: i - 13, typeShift: 3, users: [] };
+        squares[i] = { qube: i, day: i - 11, typeShift: 3, users: [] };
       }
     }
   }
@@ -63,6 +66,7 @@ export class AllWeeksComponent implements OnInit {
   getAllUsers() {
     this.authService.getAllUsers().subscribe((data) => {
       const users = data;
+      this.allUsers = data;
       for (var i = 0; i < this.users.length; i++) {
         this.users[i] = users;
       }
@@ -71,24 +75,23 @@ export class AllWeeksComponent implements OnInit {
   getAllReqWeeks() {
     this.weekService.getWeeks().subscribe((data) => {
       const allWeeks = data;
-      console.log(allWeeks);
       // tslint:disable-next-line: forin
       for (var key in allWeeks) {
         if (allWeeks[key].remarks.length > 0) {
           this.allRemarksByUsers.push({ name: allWeeks[key].creator.name, remark: allWeeks[key].remarks });
         }
-
         for (var i = 0; i < this.squares.length; i++) {
           if (allWeeks[key].shifts.length < 1) {
-            if (i == 6 || i == 12 || i == 13 || i == 19) {
-              this.squares[i].users = null
+            if (i == 11) {
+              this.squares[i].users = null;
               // this.squares[i].users.push({ userId: null, name: null, isAvilable: null, isCheck: null });
             } else {
+
               this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null });
             }
           } else {
-            if (i == 6 || i == 12 || i == 13 || i == 19) {
-              this.squares[i].users = null
+            if (i == 11) {
+              this.squares[i].users = null;
               // this.squares[i].users.push({ userId: null, name: null, isAvilable: null, isCheck: null });
             } else {
               this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null });
@@ -97,7 +100,7 @@ export class AllWeeksComponent implements OnInit {
               if (allWeeks[key].shifts[j].qube == this.squares[i].qube) {
                 for (var k = 0; k < this.squares[i].users.length; k++) {
                   if (allWeeks[key].shifts[j].creator == this.squares[i].users[k].userId) {
-                    this.squares[i].users[k].isAvilable = false
+                    this.squares[i].users[k].isAvilable = false;
                   }
                 }
               }
@@ -105,7 +108,35 @@ export class AllWeeksComponent implements OnInit {
           }
         }
       }
+      // fix all user that not send request
+      this.fixAllUserToReq(this.allUsers);
     });
+  }
+
+
+  fixAllUserToReq(users) {
+    if (users.length == 0) {
+
+    } else {
+      for (var i = 0; i < this.squares.length; i++) {
+        if (i != 11) {
+          for (var k = 0; k < users.length; k++) {
+            var flag = false;
+            var userTemp = users[k];
+            for (var j = 0; j < this.squares[i].users.length; j++) {
+              if (users[k]._id == this.squares[i].users[j].userId) {
+                flag = true;
+              }
+            }
+            if (!flag) {
+              this.squares[i].users.push({ userId: userTemp._id, name: userTemp.name, isAvilable: true, isCheck: null });
+            }
+          }
+
+        }
+      }
+    }
+
   }
 
   changeSidor(i, row, name) {
@@ -115,46 +146,46 @@ export class AllWeeksComponent implements OnInit {
       if (row.qube == 0) {
         if (name.isCheck == null) {
           this.squares[row.qube].users[i].isCheck = true;
-          this.squares[row.qube + 7].users[i].isCheck = false;
+          this.squares[row.qube + 6].users[i].isCheck = false;
         } else if (name.isCheck == true) {
           this.squares[row.qube].users[i].isCheck = null;
-          this.squares[row.qube + 7].users[i].isCheck = null;
+          this.squares[row.qube + 6].users[i].isCheck = null;
         }
       }
       //fridat shift boker
       else if (row.qube == 5) {
         if (name.isCheck == null) {
           this.squares[row.qube].users[i].isCheck = true;
-          this.squares[row.qube + 13].users[i].isCheck = false;
+          this.squares[row.qube + 11].users[i].isCheck = false;
         } else if (name.isCheck == true) {
           this.squares[row.qube].users[i].isCheck = null;
-          this.squares[row.qube + 13].users[i].isCheck = null;
+          this.squares[row.qube + 11].users[i].isCheck = null;
         }
       } else {
         if (name.isCheck == null) {
           this.squares[row.qube].users[i].isCheck = true;
-          this.squares[row.qube + 13].users[i].isCheck = false;
-          this.squares[row.qube + 7].users[i].isCheck = false;
+          this.squares[row.qube + 11].users[i].isCheck = false;
+          this.squares[row.qube + 6].users[i].isCheck = false;
         } else if (name.isCheck == true) {
           this.squares[row.qube].users[i].isCheck = null;
-          this.squares[row.qube + 13].users[i].isCheck = null;
-          this.squares[row.qube + 7].users[i].isCheck = null;
+          this.squares[row.qube + 11].users[i].isCheck = null;
+          this.squares[row.qube + 6].users[i].isCheck = null;
         }
       }
     }
     else if (row.typeShift == 2) {
       if (name.isCheck == null) {
         this.squares[row.qube].users[i].isCheck = true;
-        this.squares[row.qube - 7].users[i].isCheck = false;
-        this.squares[row.qube + 7].users[i].isCheck = false;
+        this.squares[row.qube - 6].users[i].isCheck = false;
+        this.squares[row.qube + 6].users[i].isCheck = false;
       } else if (name.isCheck == true) {
         this.squares[row.qube].users[i].isCheck = null;
-        this.squares[row.qube - 7].users[i].isCheck = null;
-        this.squares[row.qube + 7].users[i].isCheck = null;
+        this.squares[row.qube - 6].users[i].isCheck = null;
+        this.squares[row.qube + 6].users[i].isCheck = null;
       }
     }
     else if (row.typeShift == 3) {
-      if (row.qube == 20) {
+      if (row.qube == 17) {
         if (name.isCheck == null) {
           this.squares[row.qube].users[i].isCheck = true;
         }
@@ -164,12 +195,12 @@ export class AllWeeksComponent implements OnInit {
       } else {
         if (name.isCheck == null) {
           this.squares[row.qube].users[i].isCheck = true;
-          this.squares[row.qube - 13].users[i].isCheck = false;
-          this.squares[row.qube - 7].users[i].isCheck = false;
+          this.squares[row.qube - 11].users[i].isCheck = false;
+          this.squares[row.qube - 6].users[i].isCheck = false;
         } else if (name.isCheck == true) {
           this.squares[row.qube].users[i].isCheck = null;
-          this.squares[row.qube - 13].users[i].isCheck = null;
-          this.squares[row.qube - 7].users[i].isCheck = null;
+          this.squares[row.qube - 11].users[i].isCheck = null;
+          this.squares[row.qube - 6].users[i].isCheck = null;
         }
       }
     }
@@ -180,40 +211,40 @@ export class AllWeeksComponent implements OnInit {
   myChoose(i, row, name) {
     if (row.typeShift == 1) {
       if (row.qube > 0) {
-        this.squares[row.qube + 13].users.forEach((item, index) => {
+        this.squares[row.qube + 11].users.forEach((item, index) => {
           if (item === name) {
-            this.squares[row.qube + 13].users.splice(index, 1);
+            this.squares[row.qube + 11].users.splice(index, 1);
           }
         });
       }
-      this.squares[row.qube + 7].users.forEach((item, index) => {
+      this.squares[row.qube + 6].users.forEach((item, index) => {
         if (item === name) {
-          this.squares[row.qube + 7].users.splice(index, 1);
+          this.squares[row.qube + 6].users.splice(index, 1);
         }
       });
     } else if (row.typeShift == 2) {
-      this.squares[row.qube - 7].users.forEach((item, index) => {
+      this.squares[row.qube - 6].users.forEach((item, index) => {
         if (item === name) {
-          this.squares[row.qube - 7].users.splice(index, 1);
+          this.squares[row.qube - 6].users.splice(index, 1);
         }
       });
-      this.squares[row.qube + 7].users.forEach((item, index) => {
+      this.squares[row.qube + 6].users.forEach((item, index) => {
         if (item === name) {
-          this.squares[row.qube + 7].users.splice(index, 1);
+          this.squares[row.qube + 6].users.splice(index, 1);
         }
       });
     }
     else if (row.typeShift == 3) {
-      if (row.typeShift < 19) {
-        this.squares[row.qube - 13].users.forEach((item, index) => {
-          if (item === name) {
-            this.squares[row.qube - 13].users.splice(index, 1);
-          }
-        });
-      }
-      this.squares[row.qube - 7].users.forEach((item, index) => {
+      // if (row.typeShift < 19) {
+      //   this.squares[row.qube - 13].users.forEach((item, index) => {
+      //     if (item === name) {
+      //       this.squares[row.qube - 13].users.splice(index, 1);
+      //     }
+      //   });
+      // }
+      this.squares[row.qube - 6].users.forEach((item, index) => {
         if (item === name) {
-          this.squares[row.qube - 7].users.splice(index, 1);
+          this.squares[row.qube - 6].users.splice(index, 1);
         }
       });
     }

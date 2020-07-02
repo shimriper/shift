@@ -20,19 +20,16 @@
     <div class="main">
       <label *ngFor="let title of weekArray; let i= index"> {{title}} </label>
       <div *ngFor="let item of squares; let i =index">
-        <button
-          *ngIf="(item.isAvilable && i != 6 ) && (item.isAvilable && i != 12 ) && (item.isAvilable && i != 13 ) && (item.isAvilable && i != 19 )"
-          type="button" class="btn btn-outline-secondary " [value]='item' (click)="canceleShift(item,i,squares)">
+        <button *ngIf=" (item.isAvilable && i != 11 )  " type="button"
+          class="btn btn-outline-secondary btnWidth" [value]='item' (click)="canceleShift(item,i,squares)">
           <i class="fas fa-check"> </i>
         </button>
-        <button
-          *ngIf="(!item.isAvilable && i != 6 ) && (!item.isAvilable && i != 12 ) && (!item.isAvilable && i != 13 ) && (!item.isAvilable && i != 19 )"
-          type="button" class="btn btn-outline-danger " [value]='item' (click)="canceleShift(item,i,squares)">
+        <button *ngIf="  (!item.isAvilable && i != 11 ) " type="button"
+          class="btn btn-outline-danger btnWidth " [value]='item' (click)="canceleShift(item,i,squares)">
           <i class="fas fa-times"></i>
         </button>
-        <button *ngIf="item.qube == 6 || item.qube == 13 || item.qube ==12 || item.qube == 19"
-          class="button btn-outline-secondary" type="button" disabled>
-          <i class="fas fa-times"></i>
+        <button *ngIf=" item.qube ==11" class=" shabat button btn-outline-secondary" type="button">
+          <!-- <i class="fas fa-times"></i> -->ש
         </button>
       </div>
     </div>

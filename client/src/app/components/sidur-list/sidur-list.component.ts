@@ -29,7 +29,7 @@ export class SidurListComponent implements OnInit {
     // config.keyboard = false;
   }
 
-  public weekArray = ['א', 'ב', 'ג', 'ד', 'ה', 'ו', 'ש'];
+  public weekArray = ['א', 'ב', 'ג', 'ד', 'ה', 'ו'];
 
   getWeek(next: number) {
     var sunday = moment().add(next, 'week').startOf('week').format();
@@ -46,10 +46,14 @@ export class SidurListComponent implements OnInit {
 
   getMySidurByDates() {
     var startDay = this.getWeek(0);
-    var sunday = moment().startOf('week').format();
-    var saturday = moment().endOf('week').format();
+    // var sunday = moment().startOf('week').format();
+    // var saturday = moment().endOf('week').format();
+
+    var sunday = moment().add(1, 'week').startOf('week').format();
+    var saturday = moment().add(1, 'week').endOf('week').format();
 
     this.weekService.getSidurByDate(sunday, saturday).subscribe(data => {
+      // console.log(data);
       var id = data[0]._id;
       this.sidurData = data[0].qubes;
     });
