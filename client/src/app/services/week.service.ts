@@ -45,6 +45,23 @@ export class WeekService {
     return this.http.get(`${this.server}/getLastSidur/` + start + '/' + end);
   }
 
+
+  // getSidurById(id) {
+  //   return this.http.get(`${this.server}/getSidurById/` + id);
+  // }
+
+
+  // Get Sidur
+  getSidurById(id): Observable<any> {
+    let url = `${this.server}/getSidurById/${id}`;
+    return this.http.get(url, { headers: this.headers }).pipe(
+      map((res: Response) => {
+        return res || {}
+      }),
+      catchError(this.errorHandl)
+    )
+  }
+
   //sidur!!!!!
   createSidur(sidur): Observable<Week> {
     return this.http.post<Week>(this.server, sidur)

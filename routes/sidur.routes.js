@@ -46,6 +46,16 @@ router.get("/allSidurs", checkAuth, (req, res) => {
 
 
 
+// Get single sidur
+router.get('/getSidurById/:id', checkAuth, (req, res, next) => {
+    Sidur.findById(req.params.id, (error, data) => {
+        if (error) {
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+})
 
 router.get("/getLastSidur/:start/:end", checkAuth, (req, res) => {
     var d = new Date(req.params.start);

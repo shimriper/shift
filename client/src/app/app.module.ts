@@ -22,6 +22,7 @@ import { RequestResetPasswordComponent } from './components/request-reset-passwo
 import { ResponseResetPasswordComponent } from './components/response-reset-password/response-reset-password.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import { EditSidurComponent } from './components/edit-sidur/edit-sidur.component';
 
 
 
@@ -39,7 +40,8 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
     RequestResetPasswordComponent,
     ResponseResetPasswordComponent,
     UserEditComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    EditSidurComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +52,6 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
     FormsModule,
     HttpClientModule,
     NgbModule,
-
   ],
   providers: [
     {

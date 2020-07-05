@@ -10,6 +10,7 @@ import { AllWeeksComponent } from './components/all-weeks/all-weeks.component';
 import { SidurListComponent } from './components/sidur-list/sidur-list.component';
 import { WeekCreateComponent } from './components/week-create/week-create.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { EditSidurComponent } from './components/edit-sidur/edit-sidur.component';
 
 import { RequestResetPasswordComponent } from './components/request-reset-password/request-reset-password.component';
 import { ResponseResetPasswordComponent } from './components/response-reset-password/response-reset-password.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'sidur-list', component: SidurListComponent, canActivate: [AuthGuard] },
   { path: 'users-list', component: UserListComponent, canActivate: [AuthGuard] },
   { path: 'users-edit/:id', component: UserEditComponent, canActivate: [AuthGuard] },
+  { path: 'edit-sidur/:id', component: EditSidurComponent, canActivate: [AuthGuard] },
   { path: 'my-profile', component: MyProfileComponent, canActivate: [AuthGuard] },
 
   {
@@ -47,5 +49,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {
-  
+
 }
