@@ -45,7 +45,7 @@ export class SidurListComponent implements OnInit {
   }
 
   getMySidurByDates(next) {
-    var startDay = this.getWeek(1);
+    var startDay = this.getWeek(next);
     // var sunday = moment().startOf('week').format();
     // var saturday = moment().endOf('week').format();
 
