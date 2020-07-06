@@ -11,6 +11,10 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./sidur-list.component.css']
 })
 export class SidurListComponent implements OnInit {
+  userIsAuthenticated;
+  authListenerSubs;
+  myUserRule;
+
   sunday;
   saturday;
   sidur;
@@ -22,11 +26,10 @@ export class SidurListComponent implements OnInit {
   sidurs = [];
 
 
-  constructor(public weekService: WeekService,
+  constructor(
+    public weekService: WeekService,
     public authService: AuthService,
-    config: NgbModalConfig, private modalService: NgbModal) {
-    // config.backdrop = 'static';
-    // config.keyboard = false;
+  ) {
   }
 
   public weekArray = ['א', 'ב', 'ג', 'ד', 'ה', 'ו'];
@@ -72,9 +75,36 @@ export class SidurListComponent implements OnInit {
     // this.modalService.open(content);
   }
 
+  showSidur(sidur, i) {
+    var id = sidur._id;
+    this.weekService.getSidurById(id).subscribe(data => {
+      this.sidurData = data.qubes;
+      this.sidurData[11].push({ id: '11', name: '' });
+    })
+
+  }
+
+  getLastInsert() {
+    this.weekService.getLastInsert().subscribe(data => {
+      this.sidurData = data[0].qubes;
+      console.log(data);
+      this.sidurData[11].push({ id: '11', name: '' });
+    })
+  }
 
   ngOnInit(): void {
-    this.getMySidurByDates(0);
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    // this.authListenerSubs = this.authService
+    //   .getAuthStatusListener()
+    //   .subscribe(isAuthenticated => {
+    //     this.userIsAuthenticated = isAuthenticated;
+    //     this.myUserRule = this.authService.getMyRule();
+    //     console.log(this.myUserRule);
+    //   });
+    this.myUserRule = this.authService.getMyRule();
+
+    // this.getMySidurByDates(0);
+    this.getLastInsert();
     this.getAllSidurs();
   }
 

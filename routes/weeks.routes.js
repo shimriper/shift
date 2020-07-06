@@ -73,6 +73,30 @@ router.get("/getAllByStartDate", (req, res) => {
         });
 });
 
+// getAllByStartDate
+// router.get("/getLastInsert", (req, res) => {
+//     Week.find({})
+//         .sort({
+//             "_id": -1
+//         }).limit(1)
+
+//         .populate({
+//             path: "creator"
+//         })
+//         .populate({
+//             path: "shifts"
+//         })
+//         .exec(function (err, weeks) {
+//             if (err) {
+//                 return next(err)
+//             } else {
+//                 // console.log(weeks);
+//                 res.json(weeks);
+//             }
+//         });
+// });
+
+
 router.put("/:id", checkAuth, (req, res, next) => {
     const week = new Week({
         _id: req.body.id,

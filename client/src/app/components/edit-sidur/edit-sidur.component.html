@@ -7,17 +7,20 @@
           <div class="column">
             <div class="main" dir="rtl">
               <label *ngFor="let title of weekArray" style="font-weight:bold;"> {{title}} </label>
-              <div *ngFor="let item of sidurData;let i=index">
-                <div *ngIf="i !=11" class=" squares">
-                  <small class="labelQube" *ngFor="let name of item ">
-                    <input type="checkbox">
-                    {{name.name}}
-                  </small>
+              <div class="calender-days" *ngFor="let item of sidurData ; let i = index">
+                <div class="squares">
+                  <p class="scroll" *ngFor="let name of item ; let j = index" style="margin-bottom: 0 ">
+                    <small *ngIf=" !name.isExist" style="color: red;" (click)="changeSidor(i,j,name, item )">
+                      <input type="checkbox">
+                      {{name.name}}
+                    </small>
+                    <small *ngIf="name.isExist " style="color: black;" (click)="changeSidor(i,j,name, item )">
+                      <input type="checkbox">
+                      {{name.name}}
+                    </small>
+                  </p>
+                </div>
 
-                </div>
-                <div *ngIf="i ==11" style="border: 0px white solid ;height: 70px;width: 70px;">
-                  <label style="font-weight:bold; padding-top: 20px;">ש</label>
-                </div>
               </div>
             </div>
           </div>
@@ -25,17 +28,36 @@
       </div>
 
     </div>
+    <div class="media-content">
+      <button type="button" type="submit" class="button is-primary is-rounded" (click)="saveSidur()">
+        save sidor
+      </button>
+    </div>
   </article>
 </div>
 
 
-<!-- <p class="scroll" *ngFor="let item of row.users; let i = index" style="margin-bottom: 0 ">
-  <small *ngIf=" !item.isAvilable  && ( item.isCheck || item.isCheck == null)" style="color: red;">
-    <input type="checkbox" (click)="changeSidor(i,row, item )">
-    {{item.name}}
-  </small>
-  <small *ngIf="item.isAvilable  && ( item.isCheck || item.isCheck == null)" style="color: black;">
-    <input type="checkbox" (click)="changeSidor(i,row, item )">
-    {{item.name}}
-  </small>
-</p> -->
+
+<!-- <div class="content">
+  <div class="columns is-mobile">
+    <div class="column">
+      <div class="main" dir="rtl">
+        <label *ngFor="let title of weekArray" style="font-weight:bold;"> {{title}} </label>
+        <div class="calender-days" *ngFor="let row of squares ">
+          <div class="squares">
+            <p class="scroll" *ngFor="let item of row.users; let i = index" style="margin-bottom: 0 ">
+              <small *ngIf=" !item.isAvilable  && ( item.isCheck || item.isCheck == null)" style="color: red;">
+                <input type="checkbox" (click)="changeSidor(i,row, item )">
+                {{item.name}}
+              </small>
+              <small *ngIf="item.isAvilable  && ( item.isCheck || item.isCheck == null)" style="color: black;">
+                <input type="checkbox" (click)="changeSidor(i,row, item )">
+                {{item.name}}
+              </small>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

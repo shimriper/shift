@@ -52,6 +52,18 @@ export class WeekService {
 
 
   // Get Sidur
+  getLastInsert(): Observable<any> {
+    let url = `${this.server}/getLastInsert`;
+    return this.http.get(url).pipe(
+      map((res: Response) => {
+        return res || {}
+      }),
+      catchError(this.errorHandl)
+    )
+  }
+
+
+  // Get Sidur
   getSidurById(id): Observable<any> {
     let url = `${this.server}/getSidurById/${id}`;
     return this.http.get(url, { headers: this.headers }).pipe(
@@ -73,6 +85,14 @@ export class WeekService {
   // getSidurByDate(start, end) {
   //   return this.http.get(`${this.server}/getSidurByDate/` + start + '/' + end);
   // }
+
+  // Update sidur
+  updateSidur(id, data): Observable<any> {
+    let url = `${this.server}/update/${id}`;
+    return this.http.put(url, data).pipe(
+      catchError(this.errorHandl)
+    )
+  }
 
   getSidurByDate(start, end) {
     return this.http.get(`${this.server}/getSidurByDate/` + start + '/' + end);

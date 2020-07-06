@@ -73,4 +73,58 @@ router.get("/getLastSidur/:start/:end", checkAuth, (req, res) => {
     });
 });
 
+// getAllByStartDate
+router.get("/getAllByStartDate", (req, res) => {
+    Sidur.find({})
+        .populate({
+            path: "creator"
+        })
+        .populate({
+            path: "shifts"
+        })
+        .exec(function (err, weeks) {
+            if (err) {
+                return next(err)
+            } else {
+                // console.log(weeks);
+                res.json(weeks);
+            }
+        });
+});
+
+// getAllByStartDate
+router.get("/getLastInsert", (req, res) => {
+    Sidur.find({})
+        .sort({
+            "_id": -1
+        }).limit(1)
+        .populate({
+            path: "creator"
+        })
+        .populate({
+            path: "shifts"
+        })
+        .exec(function (err, weeks) {
+            if (err) {
+                return next(err)
+            } else {
+                // console.log(weeks);
+                res.json(weeks);
+            }
+        });
+});
+
+// Update User
+router.put('/update/:id', checkAuth, (req, res, next) => {
+    Sidur.findByIdAndUpdate(req.params.id, {
+        $set: req.body
+    }, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.json(data)
+        }
+    })
+})
+
 module.exports = router;

@@ -1,7 +1,7 @@
 .calender-days {
   text-align: center;
-  width: 75px;
-  height: 75px;
+  width: 125px;
+  height: 125px;
   /* background-color: #67676d ; */
   border: 3px #adadcf;
   color: aliceblue;
@@ -14,15 +14,15 @@
 .main {
   text-align: center;
   display: inline-grid;
-  grid-template-columns: 75px 75px 75px 75px 75px 75px;
+  grid-template-columns: 125px 125px 125px 125px 125px 125px;
   grid-gap: 1px;
   grid-row-gap: 6px;
 }
 
 .squares {
   border: 1px gray solid;
-  height: 70px;
-  width: 70px;
+  height: 120px;
+  width: 120px;
 }
 
 .btnPhone {
@@ -34,6 +34,7 @@
 
 
 .labelQube {
+  
   display: block;
   margin-bottom: 0rem;
 }
