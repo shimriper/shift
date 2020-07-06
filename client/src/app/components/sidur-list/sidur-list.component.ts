@@ -94,16 +94,10 @@ export class SidurListComponent implements OnInit {
 
   ngOnInit(): void {
     this.userIsAuthenticated = this.authService.getIsAuth();
-    // this.authListenerSubs = this.authService
-    //   .getAuthStatusListener()
-    //   .subscribe(isAuthenticated => {
-    //     this.userIsAuthenticated = isAuthenticated;
-    //     this.myUserRule = this.authService.getMyRule();
-    //     console.log(this.myUserRule);
-    //   });
+
     this.myUserRule = this.authService.getMyRule();
 
-    // this.getMySidurByDates(0);
+    this.getMySidurByDates(0);
     this.getLastInsert();
     this.getAllSidurs();
   }
