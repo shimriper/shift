@@ -157,7 +157,9 @@ export class EditSidurComponent implements OnInit {
           this.sidurData[i + 6].forEach((item, index) => {
             if (user.userId == item.userId) {
               if (item.isExist) {
-                this.areYouSure(item, i, j)
+                item.isExist = false;
+                this.sidurData[i][j].isExist = true;
+                // this.areYouSure(item, i, j)
               } else {
                 this.sidurData[i][j].isExist = true;
               }
@@ -209,7 +211,7 @@ export class EditSidurComponent implements OnInit {
 
   areYouSure(item, i, j) {
     Swal.fire({
-      title: 'The employee exist in shift b / c ',
+      title: 'The employee exist in other shifts ',
       text: 'Do you want to update ? ',
       icon: 'warning',
       showCancelButton: true,
