@@ -11,11 +11,11 @@
                 <div class="squares">
                   <p class="scroll" *ngFor="let name of item ; let j = index" style="margin-bottom: 0 ">
                     <small *ngIf=" !name.isExist" style="color: red;" (click)="changeSidor(i,j,name, item )">
-                      <input type="checkbox">
+                      <!-- <input type="checkbox"> -->
                       {{name.name}}
                     </small>
                     <small *ngIf="name.isExist " style="color: black;" (click)="changeSidor(i,j,name, item )">
-                      <input type="checkbox">
+                      <!-- <input type="checkbox"> -->
                       {{name.name}}
                     </small>
                   </p>

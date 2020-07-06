@@ -47,23 +47,18 @@ export class EditSidurComponent implements OnInit {
   ngOnInit(): void {
     let id = this.actRoute.snapshot.paramMap.get('id');
     this.getSidurById(id)
+    // this.getWeek(0);
     // this.getAllUsers();
 
   }
-  onItemSelect(item: any) {
-    console.log(item);
-  }
-  onSelectAll(items: any) {
-    console.log(items);
-  }
+
 
   getSidurById(id) {
     this.weekService.getSidurById(id).subscribe(data => {
-      console.log(data);
       this.sidurData = data.qubes;
+      this.saturday = moment(data.end).format('DD.MM');
+      this.sunday = moment(data.start).format('DD.MM');
       this.getAllUsers();
-
-
     });
   }
 
@@ -186,7 +181,8 @@ export class EditSidurComponent implements OnInit {
           this.sidurData[i - 6].forEach((item, index) => {
             if (user.userId == item.userId) {
               if (item.isExist) {
-                this.areYouSure(item, i, j)
+                item.isExist = false;
+                this.sidurData[i][j].isExist = true;
               } else {
                 this.sidurData[i][j].isExist = true;
               }
