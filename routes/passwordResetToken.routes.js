@@ -28,7 +28,6 @@ router.post('/req-reset-password', async (req, res) => {
                 message: 'Email does not exist'
             });
     }
-    console.log(user._id);
 
     var resettoken = await new passwordResetToken({
         _userId: user._id,
@@ -58,6 +57,8 @@ router.post('/req-reset-password', async (req, res) => {
             }
         });
         var link = 'https://warm-everglades-63023.herokuapp.com' + '/response-reset-password/' + resettoken.resettoken;
+        // var link = 'http://localhost:4200' + '/response-reset-password/' + resettoken.resettoken;
+
         var mailOptions = {
             to: user.email,
             from: 'your email',
@@ -72,6 +73,8 @@ router.post('/req-reset-password', async (req, res) => {
 });
 
 router.post('/valid-password-token', async (req, res) => {
+    console.log(req.body.resettoken);
+
     if (!req.body.resettoken) {
         return res
             .status(500)
@@ -79,31 +82,34 @@ router.post('/valid-password-token', async (req, res) => {
                 message: 'Token is required'
             });
     }
-    const user = await passwordResetToken.findOne({
+    const user = passwordResetToken.findOne({
         resettoken: req.body.resettoken
-    });
+    })
+
     if (!user) {
+        console.log('no user');
         return res
             .status(409)
             .json({
                 message: 'Invalid URL'
             });
+    } else {
+        User.findOne({
+            _id: user._userId
+        }).then(() => {
+            res.status(200).json({
+                message: 'Token verified successfully.'
+            });
+        }).catch((err) => {
+            return res.status(500).send({
+                msg: err.message
+            });
+        });
     }
-    User.findOneAndUpdate({
-        _id: user._userId
-    }).then(() => {
-        res.status(200).json({
-            message: 'Token verified successfully.'
-        });
-    }).catch((err) => {
-        return res.status(500).send({
-            msg: err.message
-        });
-    });
 });
 
 
-router.post('/new-password', (req, res) => {
+router.post('/new-password', async (req, res) => {
     passwordResetToken.findOne({
         resettoken: req.body.resettoken
     }, function (err, userToken, next) {

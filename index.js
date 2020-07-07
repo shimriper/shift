@@ -14,7 +14,7 @@ const userRoutes = require("./routes/user.routes");
 const sidurRoutes = require("./routes/sidur.routes");
 const weeksRoutes = require("./routes/weeks.routes");
 const shiftsRoutes = require("./routes/shifts.routes");
-const passwordResetTokenRoutes = require("./routes/passwordResetToken");
+const passwordResetTokenRoutes = require("./routes/passwordResetToken.routes");
 const smsRoutes = require('./routes/sms.routes');
 
 

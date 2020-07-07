@@ -8,6 +8,7 @@ if (fs.existsSync('./public')) {
     process.env.GMAIL_USER = "shiftboishift@gmail.com";
     process.env.GMAIL_PWS = "Cbehartk1!";
     process.env.apiKey = '37237b83';
+    process.env.apiSecret = 'sWX1nJYo5m8TX2pg';
 } else {
     process.env.JWT = 'secret_this_should_be_longer'
     process.env.NODE_ENV = 'development';
@@ -18,6 +19,4 @@ if (fs.existsSync('./public')) {
     process.env.GMAIL_PWS = "Cbehartk1!";
     process.env.apiKey = '37237b83';
     process.env.apiSecret = 'sWX1nJYo5m8TX2pg';
-
-
 }

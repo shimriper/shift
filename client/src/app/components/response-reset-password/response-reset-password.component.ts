@@ -22,12 +22,9 @@ export class ResponseResetPasswordComponent implements OnInit {
     private route: ActivatedRoute,
     private fb: FormBuilder
   ) {
-
     this.CurrentState = 'Wait';
     this.route.params.subscribe(params => {
-      console.log(params.token);
       this.resetToken = params.token;
-      console.log(this.resetToken);
       this.VerifyToken();
     });
 
