@@ -11,7 +11,7 @@ import { environment } from '../../environments/environment';
 })
 export class AuthService {
   endpoint = environment.apiUrl + '/user';
-  
+
   endpointReset = environment.apiUrl + '/resetpassword'
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   // currentUser = {};

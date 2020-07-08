@@ -71,13 +71,13 @@ router.post("/login", (req, res, next) => {
                     userId: fetchedUser._id
                 },
                 process.env.JWT, {
-                    expiresIn: "1h"
+                    expiresIn: "2h"
                 }
             );
             res.status(200).json({
                 success: true,
                 token: token,
-                expiresIn: 3600,
+                expiresIn: 7200,
                 userId: fetchedUser._id,
                 role: fetchedUser.role,
             });

@@ -60,6 +60,8 @@ export class SidurListComponent implements OnInit {
       var id = data[0]._id;
       this.sidurData = data[0].qubes;
       this.sidurData[11].push({ id: '11', name: '' });
+      this.sunday = moment(data[0].start).format('DD.MM');
+      this.saturday = moment(data[0].end).format('DD.MM');
     });
   }
 
@@ -80,6 +82,8 @@ export class SidurListComponent implements OnInit {
     this.weekService.getSidurById(id).subscribe(data => {
       this.sidurData = data.qubes;
       this.sidurData[11].push({ id: '11', name: '' });
+      this.sunday = moment(data.start).format('DD.MM');
+      this.saturday = moment(data.end).format('DD.MM');
     })
 
   }
@@ -87,16 +91,15 @@ export class SidurListComponent implements OnInit {
   getLastInsert() {
     this.weekService.getLastInsert().subscribe(data => {
       this.sidurData = data[0].qubes;
-      console.log(data);
       this.sidurData[11].push({ id: '11', name: '' });
+      this.sunday = moment(data[0].start).format('DD.MM');
+      this.saturday = moment(data[0].end).format('DD.MM');
     })
   }
 
   ngOnInit(): void {
     this.userIsAuthenticated = this.authService.getIsAuth();
-
     this.myUserRule = this.authService.getMyRule();
-
     this.getMySidurByDates(0);
     this.getLastInsert();
     this.getAllSidurs();
