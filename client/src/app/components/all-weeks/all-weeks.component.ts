@@ -23,6 +23,7 @@ export class AllWeeksComponent implements OnInit {
   form: FormGroup;
   sunday;
   saturday;
+  lastSidur;
   public theCheckbox = false;
 
   constructor(
@@ -48,6 +49,23 @@ export class AllWeeksComponent implements OnInit {
     this.fillWeek(this.squares);
     this.getAllReqWeeks();
     this.getLastSat();
+  }
+
+  getLastSaterday() {
+    this.weekService.getLastInsert().subscribe(data => {
+      this.lastSidur = data[0].qubes;
+      var lastItem = this.lastSidur.pop();
+      this.lastSidur = lastItem;
+
+      for (var i = 0; i < this.squares[0].users.length; i++) {
+        for (var j = 0; j < this.lastSidur.length; j++) {
+          if (this.squares[0].users[i].userId === this.lastSidur[j].userId) {
+            this.squares[0].users.splice(i, 1);
+          }
+        }
+      }
+
+    });
   }
 
   fillWeek(squares) {
@@ -86,7 +104,6 @@ export class AllWeeksComponent implements OnInit {
               this.squares[i].users = null;
               // this.squares[i].users.push({ userId: null, name: null, isAvilable: null, isCheck: null });
             } else {
-
               this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null });
             }
           } else {
@@ -136,6 +153,8 @@ export class AllWeeksComponent implements OnInit {
         }
       }
     }
+    this.getLastSaterday();
+
 
   }
 
@@ -205,9 +224,6 @@ export class AllWeeksComponent implements OnInit {
       }
     }
   }
-
-
-
   myChoose(i, row, name) {
     if (row.typeShift == 1) {
       if (row.qube > 0) {
@@ -298,8 +314,6 @@ export class AllWeeksComponent implements OnInit {
     var San = moment().add(-1, 'week').startOf('week');
 
     this.weekService.getLastSidur(San, Sat).subscribe((res: []) => {
-      console.log(res);
-
       if (res.length > 0) {
       }
     })

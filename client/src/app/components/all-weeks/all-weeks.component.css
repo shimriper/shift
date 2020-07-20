@@ -1,7 +1,7 @@
 .calender-days {
   text-align: center;
   width: 130px;
-  height: 140px;
+  height: 200px;
   /* background-color: #67676d ; */
   border: 3px #adadcf;
   color: aliceblue;
@@ -14,15 +14,15 @@
 .main {
   text-align: center;
   display: inline-grid;
-  grid-template-columns: 140px 140px 140px 140px 140px 140px;
+  grid-template-columns: 130px 130px 130px 130px 130px 130px;
   grid-gap: 1px;
-  grid-row-gap: 10px;
+  grid-row-gap: 5px;
 }
 
 .squares {
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   border: 1px gray solid;
-  height: 135px;
+  height: 195px;
   width: 125px;
 }
 

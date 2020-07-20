@@ -1,4 +1,4 @@
-<div class="box" style="text-align: center; padding-top: 20px;">
+<!-- <div class="box" style="text-align: center; padding-top: 20px;">
   <article class="media-center">
     <div class="media-content">
       <div class="content">
@@ -33,9 +33,6 @@
   </article>
 </div>
 
-
-
-
 <div class="box" style="text-align: center; padding-top: 20px;">
   <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let item of allRemarksByUsers; let i=index">
     <ngb-panel id="i" title="{{item.name}}" style="text-align: center;">
@@ -45,4 +42,47 @@
     </ngb-panel>
 
   </ngb-accordion>
+</div> -->
+
+
+<div class="container">
+  <div class="box" style="text-align: center; padding-top: 20px;">
+    <div class="row">
+      <div class="col-10">
+        <div class="main" dir="rtl">
+          <label *ngFor="let title of weekArray" style="font-weight:bold;"> {{title}} </label>
+          <div class="calender-days" *ngFor="let row of squares ">
+            <div class="squares">
+              <p class="scroll" *ngFor="let item of row.users; let i = index" style="margin-bottom: 0 ">
+                <small *ngIf=" !item.isAvilable  && ( item.isCheck || item.isCheck == null)" style="color: red;">
+                  <input type="checkbox" (click)="changeSidor(i,row, item )">
+                  {{item.name}}
+                </small>
+                <small *ngIf="item.isAvilable  && ( item.isCheck || item.isCheck == null)" style="color: black;">
+                  <input type="checkbox" (click)="changeSidor(i,row, item )">
+                  {{item.name}}
+                </small>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="media-content">
+          <button type="button" type="submit" class="button is-primary is-rounded" (click)="saveSidur()">
+            save sidor
+          </button>
+        </div>
+      </div>
+      <div class="col-2" style="   padding-top: 40px; text-align: center;">
+        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let item of allRemarksByUsers; let i=index">
+          <ngb-panel id="i" title="{{item.name}}" style="text-align: center;">
+            <ng-template ngbPanelContent>
+              {{item.remark}}
+            </ng-template>
+          </ngb-panel>
+
+        </ngb-accordion>
+      </div>
+
+    </div>
+  </div>
 </div>

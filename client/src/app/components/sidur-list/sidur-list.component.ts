@@ -24,6 +24,7 @@ export class SidurListComponent implements OnInit {
   noData: boolean = true;
   closeResult: string;
   sidurs = [];
+  userName;
 
 
   constructor(
@@ -56,7 +57,6 @@ export class SidurListComponent implements OnInit {
     var saturday = moment().add(next, 'week').endOf('week').format();
 
     this.weekService.getSidurByDate(sunday, saturday).subscribe(data => {
-      console.log(data);
       var id = data[0]._id;
       this.sidurData = data[0].qubes;
       this.sidurData[11].push({ id: '11', name: '' });
@@ -73,7 +73,6 @@ export class SidurListComponent implements OnInit {
 
   updateQube(item) {
     this.isUpdate = true
-    console.log(item);
     // this.modalService.open(content);
   }
 
@@ -100,9 +99,9 @@ export class SidurListComponent implements OnInit {
   ngOnInit(): void {
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.myUserRule = this.authService.getMyRule();
+    this.userName = this.authService.getUserId();
     this.getMySidurByDates(0);
     this.getLastInsert();
     this.getAllSidurs();
   }
-
 }

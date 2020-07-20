@@ -10,8 +10,16 @@
               <div *ngFor="let item of sidurData;let i=index">
                 <div *ngIf="i !=11" class=" squares">
                   <small class="labelQube" *ngFor="let name of item " (click)="updateQube(item)">
-                    {{name.name}}
+                    <label *ngIf="userName == name.userId" style="font-weight: bold;     background: springgreen;">
+                      {{name.name}}
+                    </label>
+                    <label *ngIf="userName != name.userId">
+                      {{name.name}}
+                    </label>
                   </small>
+                  <!-- <small *ngIf="userName == name" >
+                    {{name.name}}
+                  </small> -->
                 </div>
                 <div *ngIf="i ==11" style="border: 0px white solid ;height: 70px;width: 70px;">
                   <label style="font-weight:bold; padding-top: 45px; padding-right: 45px; ">ש</label>

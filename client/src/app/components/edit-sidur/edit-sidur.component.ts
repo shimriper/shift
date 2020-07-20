@@ -46,7 +46,7 @@ export class EditSidurComponent implements OnInit {
 
   ngOnInit(): void {
     let id = this.actRoute.snapshot.paramMap.get('id');
-    this.getSidurById(id)
+    this.getSidurById(id);
     // this.getWeek(0);
     // this.getAllUsers();
 
@@ -86,9 +86,9 @@ export class EditSidurComponent implements OnInit {
                 this.sidurData[j][k].isExist = true;
               }
             }
-          }
-          if (!flag) {
-            this.sidurData[j].push({ userId: userTmpId.userId, name: userTmpId.name, isExist: false });
+            if (!flag) {
+              this.sidurData[j].push({ userId: userTmpId.userId, name: userTmpId.name, isExist: false });
+            }
           }
         }
       }
@@ -122,7 +122,7 @@ export class EditSidurComponent implements OnInit {
     if (i < 6) {
       if (user.isExist) {
         this.sidurData[i][j].isExist = false;
-      } else {
+      } else if (i == 0) {
         this.sidurData[i + 6].forEach((item, index) => {
           if (user.userId == item.userId) {
             if (item.isExist) {
@@ -132,17 +132,26 @@ export class EditSidurComponent implements OnInit {
             }
           }
         });
-        if (i != 0) {
-          this.sidurData[i + 11].forEach((item, index) => {
-            if (user.userId == item.userId) {
-              if (item.isExist) {
-                this.areYouSure(item, i, j)
-              } else {
-                this.sidurData[i][j].isExist = true;
-              }
+      }
+      else {
+        this.sidurData[i + 6].forEach((item, index) => {
+          if (user.userId == item.userId) {
+            if (item.isExist) {
+              this.areYouSure(item, i, j)
+            } else {
+              this.sidurData[i][j].isExist = true;
             }
-          });
-        }
+          }
+        });
+        this.sidurData[i + 11].forEach((item, index) => {
+          if (user.userId == item.userId) {
+            if (item.isExist) {
+              this.areYouSure(item, i, j)
+            } else {
+              this.sidurData[i][j].isExist = true;
+            }
+          }
+        });
       }
     }
     else if (i > 5 && i < 12) {
@@ -150,73 +159,28 @@ export class EditSidurComponent implements OnInit {
         this.sidurData[i][j].isExist = false;
       } else {
         if (i != 11) {
-          Swal.fire({
-            title: 'The employee exist in other shifts ',
-            text: 'Do you want to update ? ',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, update it!',
-            cancelButtonText: 'No, keep it'
-          }).then((result) => {
-            if (result.value) {
-              Swal.fire(
-                'updated!',
-                'Your imaginary file has been updated.',
-                'success'
-              )
-              this.sidurData[i - 6].forEach((item, index) => {
-                if (user.userId == item.userId) {
-                  if (item.isExist) {
-                    item.isExist = false;
-                    this.sidurData[i][j].isExist = true;
-                  } else {
-                    this.sidurData[i][j].isExist = true;
-                  }
-                }
-              });
-              this.sidurData[i + 6].forEach((item, index) => {
-                if (user.userId == item.userId) {
-                  if (item.isExist) {
-                    item.isExist = false;
-                    this.sidurData[i][j].isExist = true;
-                    // this.areYouSure(item, i, j)
-                  } else {
-                    this.sidurData[i][j].isExist = true;
-                  }
-                }
-              });
-            } else if (result.dismiss === Swal.DismissReason.cancel) {
-              Swal.fire(
-                'Cancelled',
-                'Your imaginary file is safe :)',
-                'error'
-              )
+          this.sidurData[i - 6].forEach((item, index) => {
+            if (user.userId == item.userId) {
+              if (item.isExist) {
+                item.isExist = false;
+                this.sidurData[i][j].isExist = true;
+              } else {
+                this.sidurData[i][j].isExist = true;
+              }
             }
-          })
-
-          // this.sidurData[i + 6].forEach((item, index) => {
-          //   if (user.userId == item.userId) {
-          //     if (item.isExist) {
-          //       item.isExist = false;
-          //       this.sidurData[i][j].isExist = true;
-          //       // this.areYouSure(item, i, j)
-          //     } else {
-          //       this.sidurData[i][j].isExist = true;
-          //     }
-          //   }
-          // });
-          // this.sidurData[i - 6].forEach((item, index) => {
-          //   if (user.userId == item.userId) {
-          //     if (item.isExist) {
-          //       this.areYouSure(item, i, j)
-          //     } else {
-          //       this.sidurData[i][j].isExist = true;
-          //     }
-          //   }
-          // });
+          });
+          this.sidurData[i + 6].forEach((item, index) => {
+            if (user.userId == item.userId) {
+              if (item.isExist) {
+                item.isExist = false;
+                this.sidurData[i][j].isExist = true;
+              } else {
+                this.sidurData[i][j].isExist = true;
+              }
+            }
+          });
         }
       }
-
     }
     else if (i > 11 && i < 18) {
       if (user.isExist) {
