@@ -135,16 +135,24 @@ router.get("", (req, res, next) => {
 
 router.get("/getWeekByCreator", checkAuth, (req, res) => {
     Week.findOne({
-        creator: req.userData.userId
-    }).then((week) => {
-        if (week) {
-            res.json(week);
-        } else {
-            res.json({
-                message: "week not found!"
-            });
-        }
-    });
+            creator: req.userData.userId
+        })
+        .populate({
+            path: "shifts"
+        })
+        .then((week) => {
+            if (week) {
+                res.json({
+                    message: "success",
+                    data: week
+                });
+            } else {
+                res.json({
+                    message: "week not found!",
+                    data: ''
+                });
+            }
+        });
 });
 
 router.get("/:id", (req, res, next) => {

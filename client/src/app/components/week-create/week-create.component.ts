@@ -88,12 +88,19 @@ export class WeekCreateComponent implements OnInit {
 
   getMyWeek() {
     this.weekService.getWeekByCreator().subscribe((data: { message, data }) => {
-      if (data.message) {
+      if (data.message != 'success') {
         this.isUpdate = false;
       } else {
+        const week = data.data;
+
         this.remarksForm.setValue({
-          remarks: data['remarks']
+          remarks: week['remarks']
         })
+        this.shiftLast = week.shifts;
+        console.log(this.shiftLast);
+
+        this.fillArrByLastReq(this.shiftLast);
+
         this.shiftsId = data;
         this.isUpdate = true;
         var startDay = this.getWeek(1);
@@ -173,6 +180,7 @@ export class WeekCreateComponent implements OnInit {
   }
 
   fillArrByLastReq(shiftLast) {
+    console.log(shiftLast);
     for (var i = 0; i < shiftLast.length; i++) {
       this.squares[shiftLast[i].qube].isAvilable = false;
     }
