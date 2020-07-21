@@ -35,13 +35,18 @@ router.get("/getSidurByDate/:start/:end", checkAuth, (req, res) => {
 });
 
 router.get("/allSidurs", checkAuth, (req, res) => {
-    Sidur.find({}).exec(function (err, sidur) {
-        if (err) {
-            // console.log(err);
-        } else {
-            res.json(sidur);
-        }
-    });
+    Sidur.find({})
+        .limit(5)
+        .sort({
+            start: -1
+        })
+        .exec(function (err, sidur) {
+            if (err) {
+                // console.log(err);
+            } else {
+                res.json(sidur);
+            }
+        });
 });
 
 
