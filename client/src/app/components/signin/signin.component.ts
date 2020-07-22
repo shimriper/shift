@@ -22,12 +22,9 @@ export class SigninComponent implements OnInit {
     if (form.invalid) {
       return;
     }
-    console.log(form);
     this.authService.login(form.value.email, form.value.password);
     form.resetForm();
   }
-
-
 
   ngOnInit(): void {
   }

@@ -5,12 +5,15 @@ const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
 
 router.post("", checkAuth, (req, res, next) => {
+    var day = new Date();
     const week = new Week({
         creator: req.userData.userId,
         start: req.body.start,
         end: req.body.end,
         shifts: req.body.shifts,
         remarks: req.body.remarks,
+        lastModified: day
+
     });
     week.save().then((createdWeek) => {
         res.status(201).json({
@@ -98,6 +101,7 @@ router.get("/getAllByStartDate", (req, res) => {
 
 
 router.put("/:id", checkAuth, (req, res, next) => {
+    var day = new Date();
     const week = new Week({
         _id: req.body.id,
         creator: req.userData.userId,
@@ -105,6 +109,7 @@ router.put("/:id", checkAuth, (req, res, next) => {
         end: req.body.end,
         shifts: req.body.shifts,
         remarks: req.body.remarks,
+        lastModified: day
     });
     Week.updateOne({
             _id: req.params.id,

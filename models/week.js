@@ -12,8 +12,16 @@ const weekSchema = mongoose.Schema({
   end: {
     type: Date,
   },
-  shifts: [{type:mongoose.Schema.Types.ObjectId,ref:"Shift"}],
-  remarks: {type:String}
+  shifts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Shift"
+  }],
+  remarks: {
+    type: String
+  },
+  lastModified: {
+    type: Date,
+  }
 });
 
 module.exports = mongoose.model("Week", weekSchema);

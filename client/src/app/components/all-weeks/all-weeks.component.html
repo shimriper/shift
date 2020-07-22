@@ -74,12 +74,12 @@
       </div>
       <div class="col-2" style="   padding-top: 40px; text-align: center;">
         <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" *ngFor="let item of allRemarksByUsers; let i=index">
-          <ngb-panel id="i" title="{{item.name}}" style="text-align: center;">
+          <ngb-panel id="i" title="{{item.name}} lastUpdate {{item.lastModified | date:'dd/MM' }} "
+            style="text-align: center;">
             <ng-template ngbPanelContent>
               {{item.remark}}
             </ng-template>
           </ngb-panel>
-
         </ngb-accordion>
       </div>
 

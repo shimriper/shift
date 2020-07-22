@@ -96,7 +96,7 @@ export class AllWeeksComponent implements OnInit {
       // tslint:disable-next-line: forin
       for (var key in allWeeks) {
         if (allWeeks[key].remarks.length > 0) {
-          this.allRemarksByUsers.push({ name: allWeeks[key].creator.name, remark: allWeeks[key].remarks });
+          this.allRemarksByUsers.push({ name: allWeeks[key].creator.name, remark: allWeeks[key].remarks, lastModified: allWeeks[key].lastModified });
         }
         for (var i = 0; i < this.squares.length; i++) {
           if (allWeeks[key].shifts.length < 1) {
@@ -104,14 +104,14 @@ export class AllWeeksComponent implements OnInit {
               this.squares[i].users = null;
               // this.squares[i].users.push({ userId: null, name: null, isAvilable: null, isCheck: null });
             } else {
-              this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null });
+              this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null, lastModified: allWeeks[key].lastModified });
             }
           } else {
             if (i == 11) {
               this.squares[i].users = null;
               // this.squares[i].users.push({ userId: null, name: null, isAvilable: null, isCheck: null });
             } else {
-              this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null });
+              this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null, lastModified: allWeeks[key].lastModified });
             }
             for (var j = 0; j < allWeeks[key].shifts.length; j++) {
               if (allWeeks[key].shifts[j].qube == this.squares[i].qube) {
@@ -125,6 +125,7 @@ export class AllWeeksComponent implements OnInit {
           }
         }
       }
+      console.log(this.allRemarksByUsers);
       // fix all user that not send request
       this.fixAllUserToReq(this.allUsers);
     });

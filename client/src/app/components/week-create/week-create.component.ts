@@ -42,6 +42,7 @@ export class WeekCreateComponent implements OnInit {
   numOfWeek = 1;
 
   userId: string;
+  lastModified;
 
   public weekArray = ['א', 'ב', 'ג', 'ד', 'ה', 'ו'];
   constructor(public authService: AuthService,
@@ -97,18 +98,19 @@ export class WeekCreateComponent implements OnInit {
           remarks: week['remarks']
         })
         this.shiftLast = week.shifts;
-        console.log(this.shiftLast);
+        this.lastModified = week.lastModified;
+        console.log(week);
 
         this.fillArrByLastReq(this.shiftLast);
 
         this.shiftsId = data;
         this.isUpdate = true;
         var startDay = this.getWeek(1);
-        this.shiftService.getMyShiftsByDate(startDay.sunday, startDay.saturday)
-          .subscribe(res => {
-            this.shiftLast = res;
-            this.fillArrByLastReq(this.shiftLast);
-          })
+        // this.shiftService.getMyShiftsByDate(startDay.sunday, startDay.saturday)
+        //   .subscribe(res => {
+        //     this.shiftLast = res;
+        //     this.fillArrByLastReq(this.shiftLast);
+        //   })
       }
     })
   }

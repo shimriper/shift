@@ -26,8 +26,8 @@ export class UserListComponent implements OnInit {
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.value) {
+        this.users.splice(index, 1);
         this.authService.deleteUser(user._id).subscribe((data) => {
-          this.users.splice(index, 1);
         })
         Swal.fire(
           'Deleted!',

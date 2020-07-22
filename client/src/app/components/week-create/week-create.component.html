@@ -1,12 +1,15 @@
 <div class="card" dir="rtl" style="text-align: center; padding-top: 5px;">
   <div class="card-body ">
-    <h4 class="card-title" style="font-weight:bold;">Shifts Requests</h4>
+    <div>
+      <small>Last Modified: {{ lastModified | date: 'dd/MM HH:MM' }}</small>
+    </div>
+    <!-- <h4 class="card-title" style="font-weight:bold;">Shifts Requests</h4> -->
     <div class="field">
     </div>
     <div>
       <label style="font-weight:bold;"> {{ sunday }} - {{ saturday }} </label>
     </div>
-
+    <br>
     <div class="main">
       <label *ngFor="let title of weekArray; let i= index" style="font-weight:bold"> {{title}} </label>
       <div *ngFor="let item of squares; let i =index">
@@ -39,18 +42,20 @@
     </div>
     <div class="col" style="padding-top:20px ; " dir="ltr">
       <form class="form-signin" [formGroup]="remarksForm" (ngSubmit)="sendRequests()">
-        <div class="form-group">
-          <input class="form-control" name="remarks" formControlName="remarks" placeholder="Notes...">
+        <div class="form-group ">
+          <input class="form-control remark" name="remarks" formControlName="remarks" placeholder="Notes...">
         </div>
       </form>
     </div>
   </div>
   <div class="card-footer btnPhone" *ngIf="!isUpdate">
-    <button type="button" type="submit" class="button is-primary is-rounded" (click)="sendRequests()">send
+    <button type="button" type="submit" class="button is-primary" (click)="sendRequests()"
+      style="    border-radius: 0;    ">send
       request</button>
   </div>
   <div class="card-footer btnPhone" *ngIf="isUpdate">
-    <button type="button" type="submit" class="button is-primary is-rounded" (click)="updateReq()">update
+    <button type="button" type="submit" class="button is-primary" (click)="updateReq()"
+      style="    border-radius: 0;    ">update
       Request</button>
   </div>
 </div>
