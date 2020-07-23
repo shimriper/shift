@@ -46,7 +46,9 @@
 
 
 <div class="container">
-  <div class="box" style="text-align: center; padding-top: 20px;">
+  <div class="box bx" style="text-align: center; padding-top: 20px;">
+    <label style="font-weight:bold;"> {{ sunday }} - {{ saturday }} </label>
+
     <div class="row">
       <div class="col-10">
         <div class="main" dir="rtl">
@@ -67,7 +69,7 @@
           </div>
         </div>
         <div class="media-content">
-          <button type="button" type="submit" class="button is-primary is-rounded" (click)="saveSidur()">
+          <button type="button" type="submit" class="button is-primary" (click)="saveSidur()">
             save sidor
           </button>
         </div>

@@ -49,7 +49,6 @@ export class WeekCreateComponent implements OnInit {
     public shiftService: ShiftService,
     public weekService: WeekService,
     public fb: FormBuilder,
-
   ) {
     this.remarksForm = this.fb.group({
       remarks: [''],
@@ -57,7 +56,6 @@ export class WeekCreateComponent implements OnInit {
   }
   changeOption(e) {
     this.numOfWeek = e.target.value;
-
   }
 
   createWeek() {
@@ -99,13 +97,12 @@ export class WeekCreateComponent implements OnInit {
         })
         this.shiftLast = week.shifts;
         this.lastModified = week.lastModified;
-        console.log(week);
 
         this.fillArrByLastReq(this.shiftLast);
 
         this.shiftsId = data;
         this.isUpdate = true;
-        var startDay = this.getWeek(1);
+        // var startDay = this.getWeek(1);
         // this.shiftService.getMyShiftsByDate(startDay.sunday, startDay.saturday)
         //   .subscribe(res => {
         //     this.shiftLast = res;
@@ -129,7 +126,7 @@ export class WeekCreateComponent implements OnInit {
           shifts: shiftsIds,
           remarks: remark.remarks
         };
-        console.log(this.week);
+
         this.weekService.addWeek(this.week).subscribe(res => {
           let weekId = res;
           this.isUpdate = true;
@@ -157,6 +154,7 @@ export class WeekCreateComponent implements OnInit {
       }
     }
   }
+
   getWeek(next: number) {
     var sunday = moment().add(next, 'week').startOf('week').format();
     var saturday = moment().add(next, 'week').endOf('week').format();
@@ -182,7 +180,6 @@ export class WeekCreateComponent implements OnInit {
   }
 
   fillArrByLastReq(shiftLast) {
-    console.log(shiftLast);
     for (var i = 0; i < shiftLast.length; i++) {
       this.squares[shiftLast[i].qube].isAvilable = false;
     }

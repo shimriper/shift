@@ -49,6 +49,7 @@ export class AllWeeksComponent implements OnInit {
     this.fillWeek(this.squares);
     this.getAllReqWeeks();
     this.getLastSat();
+    this.getWeek(1);
   }
 
   getLastSaterday() {
@@ -125,7 +126,6 @@ export class AllWeeksComponent implements OnInit {
           }
         }
       }
-      console.log(this.allRemarksByUsers);
       // fix all user that not send request
       this.fixAllUserToReq(this.allUsers);
     });
@@ -154,7 +154,7 @@ export class AllWeeksComponent implements OnInit {
         }
       }
     }
-    this.getLastSaterday();
+    // this.getLastSaterday();
 
 
   }
@@ -172,7 +172,7 @@ export class AllWeeksComponent implements OnInit {
           this.squares[row.qube + 6].users[i].isCheck = null;
         }
       }
-      //fridat shift boker
+      //friday shift boker
       else if (row.qube == 5) {
         if (name.isCheck == null) {
           this.squares[row.qube].users[i].isCheck = true;

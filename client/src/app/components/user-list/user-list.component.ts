@@ -16,7 +16,7 @@ export class UserListComponent implements OnInit {
   ngOnInit(): void {
     this.getAllUsers();
   }
-  removeUser(user, index) {
+  removeUser(user) {
     Swal.fire({
       title: 'Are you sure?',
       text: 'You will not be able to recover this imaginary file!',
@@ -26,14 +26,16 @@ export class UserListComponent implements OnInit {
       cancelButtonText: 'No, keep it'
     }).then((result) => {
       if (result.value) {
-        this.users.splice(index, 1);
-        this.authService.deleteUser(user._id).subscribe((data) => {
+        this.authService.deleteUser(user).subscribe((data: { message }) => {
+          if (data.message == 'success') {
+
+            Swal.fire(
+              'Deleted!',
+              'Your imaginary file has been deleted.',
+              'success'
+            )
+          }
         })
-        Swal.fire(
-          'Deleted!',
-          'Your imaginary file has been deleted.',
-          'success'
-        )
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
           'Cancelled',
@@ -51,7 +53,7 @@ export class UserListComponent implements OnInit {
 
   getAllUsers() {
     this.authService.getAllUsers().subscribe(users => {
-      this.users = users
+      this.users = users;
     });
   }
   disabledUser(user) {

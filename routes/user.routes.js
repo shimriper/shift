@@ -107,13 +107,13 @@ router.get("/getAllUsers", (req, res) => {
 
 // Delete user
 router.delete('/delete/:id', checkAuth, (req, res, next) => {
-    User.findOneAndRemove(req.params.id, (error, data) => {
+    User.findByIdAndRemove(req.params.id, (error, data) => {
         if (error) {
             return next(error);
         } else {
             res.status(200).json({
-                msg: data
-            })
+                message: 'success'
+            });
         }
     })
 })

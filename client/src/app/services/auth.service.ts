@@ -101,9 +101,10 @@ export class AuthService {
   }
 
   // Delete User
-  deleteUser(id): Observable<any> {
-    let url = `${this.endpoint}/delete/${id}`;
-    return this.http.delete(url, { headers: this.headers }).pipe(
+  deleteUser(user): Observable<any> {
+    var id = user._id;
+    let url = `${this.endpoint}/delete/`+ id;
+    return this.http.delete(url).pipe(
       catchError(this.errorMgmt)
     )
   }

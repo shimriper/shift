@@ -13,7 +13,6 @@ router.post("", checkAuth, (req, res, next) => {
         shifts: req.body.shifts,
         remarks: req.body.remarks,
         lastModified: day
-
     });
     week.save().then((createdWeek) => {
         res.status(201).json({
@@ -39,23 +38,6 @@ router.delete("/deleteWeek", checkAuth, (req, res) => {
         }
     });
 });
-// 
-// Week.findOneAndDelete({
-//     creator: req.userData.userId
-// }).then((result) => {
-//     if (result.n != null) {
-//         res
-//             .status(200)
-//             .json({
-//                 message: "shifts and Week delete successful!"
-//             });
-//     } else {
-//         res.status(200).json({
-//             message: "Not  Authorized!"
-//         });
-//     }
-// });
-// 
 
 // getAllByStartDate
 router.get("/getAllByStartDate", (req, res) => {
