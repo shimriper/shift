@@ -56,11 +56,14 @@
           <div class="calender-days" *ngFor="let row of squares ">
             <div class="squares">
               <p class="scroll" *ngFor="let item of row.users; let i = index" style="margin-bottom: 0 ">
-                <small *ngIf=" !item.isAvilable  && ( item.isCheck || item.isCheck == null)" style="color: red;">
+                <small
+                  *ngIf=" !item.isAvilable  && ( item.isCheck || item.isCheck == null) && (item.isSaterday == null)"
+                  style="color: red;">
                   <input type="checkbox" (click)="changeSidor(i,row, item )">
                   {{item.name}}
                 </small>
-                <small *ngIf="item.isAvilable  && ( item.isCheck || item.isCheck == null)" style="color: black;">
+                <small *ngIf="item.isAvilable  && ( item.isCheck || item.isCheck == null) && (item.isSaterday == null)"
+                  style="color: black;">
                   <input type="checkbox" (click)="changeSidor(i,row, item )">
                   {{item.name}}
                 </small>

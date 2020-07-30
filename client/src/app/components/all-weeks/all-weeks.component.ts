@@ -61,7 +61,8 @@ export class AllWeeksComponent implements OnInit {
       for (var i = 0; i < this.squares[0].users.length; i++) {
         for (var j = 0; j < this.lastSidur.length; j++) {
           if (this.squares[0].users[i].userId === this.lastSidur[j].userId) {
-            this.squares[0].users.splice(i, 1);
+            // this.squares[0].users.splice(i, 1);
+            this.squares[0].users[i].isSaterday = true;
           }
         }
       }
@@ -92,13 +93,18 @@ export class AllWeeksComponent implements OnInit {
     });
   }
   getAllReqWeeks() {
-    this.weekService.getWeeks().subscribe((data) => {
+
+    var days = this.getWeek(1);
+    console.log(days);
+    this.weekService.getWeeks(days.sunday, days.saturday).subscribe((data) => {
       const allWeeks = data;
+
+      console.log(data);
       // tslint:disable-next-line: forin
       for (var key in allWeeks) {
-        if (allWeeks[key].remarks.length > 0) {
-          this.allRemarksByUsers.push({ name: allWeeks[key].creator.name, remark: allWeeks[key].remarks, lastModified: allWeeks[key].lastModified });
-        }
+        // if (allWeeks[key].remarks.length > 0) {
+        this.allRemarksByUsers.push({ name: allWeeks[key].creator.name, remark: allWeeks[key].remarks, lastModified: allWeeks[key].lastModified });
+        // }
         for (var i = 0; i < this.squares.length; i++) {
           if (allWeeks[key].shifts.length < 1) {
             if (i == 11) {
@@ -134,7 +140,6 @@ export class AllWeeksComponent implements OnInit {
 
   fixAllUserToReq(users) {
     if (users.length == 0) {
-
     } else {
       for (var i = 0; i < this.squares.length; i++) {
         if (i != 11) {
@@ -154,9 +159,7 @@ export class AllWeeksComponent implements OnInit {
         }
       }
     }
-    // this.getLastSaterday();
-
-
+    this.getLastSaterday();
   }
 
   changeSidor(i, row, name) {

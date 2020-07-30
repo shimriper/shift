@@ -40,8 +40,12 @@ router.delete("/deleteWeek", checkAuth, (req, res) => {
 });
 
 // getAllByStartDate
-router.get("/getAllByStartDate", (req, res) => {
-    Week.find({})
+router.get("/getAllByStartDate/:start/:end", (req, res) => {
+    var d = new Date(req.params.start);
+    console.log(d);
+    Week.find({
+            start: d
+        })
         .populate({
             path: "creator"
         })
@@ -50,13 +54,32 @@ router.get("/getAllByStartDate", (req, res) => {
         })
         .exec(function (err, weeks) {
             if (err) {
-                return next(err)
+                console.log(weeks);
+                // res.json(weeks);
+                // return next(err)
             } else {
                 // console.log(weeks);
                 res.json(weeks);
             }
         });
 });
+
+
+// router.get("/getLastSidur/:start/:end", checkAuth, (req, res) => {
+//     var d = new Date(req.params.start);
+//     // console.log(d);
+//     Sidur.findOne({
+//         start: d
+//     }).exec(function (err, sidur) {
+//         if (err) {
+//             res.json({
+//                 message: "err" + err
+//             })
+//         } else {
+//             res.json(sidur);
+//         }
+//     });
+// });
 
 // getAllByStartDate
 // router.get("/getLastInsert", (req, res) => {

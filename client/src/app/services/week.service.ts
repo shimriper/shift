@@ -24,8 +24,9 @@ export class WeekService {
         catchError(this.errorHandl)
       )
   }
-  getWeeks() {
-    return this.http.get(`${this.endpoint}/getAllByStartDate`);
+  getWeeks(start, end) {
+
+    return this.http.get(`${this.endpoint}/getAllByStartDate/` + start + '/' + end);
   }
 
   getWeekByCreator() {
@@ -41,7 +42,6 @@ export class WeekService {
   }
 
   getLastSidur(start, end) {
-
     return this.http.get(`${this.server}/getLastSidur/` + start + '/' + end);
   }
 

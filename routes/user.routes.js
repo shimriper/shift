@@ -95,11 +95,14 @@ router.post("/login", (req, res, next) => {
 
 // getAllByStartDate
 router.get("/getAllUsers", (req, res) => {
-    User.find({})
+    User.find({
+            isDisabeld: false
+        })
         .sort({
             priority: 1
         }).exec(function (err, users) {
             if (err) {} else {
+                console.log(users);
                 res.json(users);
             }
         });
