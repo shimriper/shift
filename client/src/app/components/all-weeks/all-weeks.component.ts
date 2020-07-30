@@ -93,30 +93,22 @@ export class AllWeeksComponent implements OnInit {
     });
   }
   getAllReqWeeks() {
-
     var days = this.getWeek(1);
-    console.log(days);
     this.weekService.getWeeks(days.sunday, days.saturday).subscribe((data) => {
       const allWeeks = data;
-
-      console.log(data);
       // tslint:disable-next-line: forin
       for (var key in allWeeks) {
-        // if (allWeeks[key].remarks.length > 0) {
         this.allRemarksByUsers.push({ name: allWeeks[key].creator.name, remark: allWeeks[key].remarks, lastModified: allWeeks[key].lastModified });
-        // }
         for (var i = 0; i < this.squares.length; i++) {
           if (allWeeks[key].shifts.length < 1) {
             if (i == 11) {
               this.squares[i].users = null;
-              // this.squares[i].users.push({ userId: null, name: null, isAvilable: null, isCheck: null });
             } else {
               this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null, lastModified: allWeeks[key].lastModified });
             }
           } else {
             if (i == 11) {
               this.squares[i].users = null;
-              // this.squares[i].users.push({ userId: null, name: null, isAvilable: null, isCheck: null });
             } else {
               this.squares[i].users.push({ userId: allWeeks[key].creator._id, name: allWeeks[key].creator.name, isAvilable: true, isCheck: null, lastModified: allWeeks[key].lastModified });
             }
@@ -136,8 +128,6 @@ export class AllWeeksComponent implements OnInit {
       this.fixAllUserToReq(this.allUsers);
     });
   }
-
-
   fixAllUserToReq(users) {
     if (users.length == 0) {
     } else {

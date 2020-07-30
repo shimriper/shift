@@ -90,7 +90,17 @@ router.post("/login", (req, res, next) => {
             });
         });
 });
-
+router.get("/AllUsers", (req, res) => {
+    User.find({})
+        .sort({
+            priority: 1
+        }).exec(function (err, users) {
+            if (err) {} else {
+                console.log(users);
+                res.json(users);
+            }
+        });
+});
 
 
 // getAllByStartDate

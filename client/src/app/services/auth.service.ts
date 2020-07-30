@@ -46,7 +46,7 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
   getAllUsers() {
-    return this.http.get(`${this.endpoint}/getAllUsers`);
+    return this.http.get(`${this.endpoint}/AllUsers`);
   }
   disabeldUserById(id) {
     return this.http.put(this.endpoint + '/disabeldUser/' + id, id);
@@ -103,7 +103,7 @@ export class AuthService {
   // Delete User
   deleteUser(user): Observable<any> {
     var id = user._id;
-    let url = `${this.endpoint}/delete/`+ id;
+    let url = `${this.endpoint}/delete/` + id;
     return this.http.delete(url).pipe(
       catchError(this.errorMgmt)
     )
