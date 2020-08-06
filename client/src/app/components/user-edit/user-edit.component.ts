@@ -28,11 +28,11 @@ export class UserEditComponent implements OnInit {
       name: [''],
       email: [''],
       role: [''],
-      phone: [''],
+      // phone: [''],
       // name: ['', [Validators.required]],
       // email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
       // role: [''],
-      // phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      phone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
 
     })
   }

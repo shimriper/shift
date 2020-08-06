@@ -20,7 +20,7 @@
 }
 
 .squares {
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
   border: 1px gray solid;
   height: 195px;
   width: 125px;

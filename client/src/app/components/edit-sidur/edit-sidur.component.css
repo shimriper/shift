@@ -33,6 +33,11 @@
   display: grid;
 }
 
+.labelQube {
+
+  display: block;
+  margin-bottom: 0rem;
+}
 
 /* @media {
   .main {

@@ -10,11 +10,15 @@
               <div *ngFor="let item of sidurData;let i=index">
                 <div *ngIf="i !=11" class=" squares">
                   <small class="labelQube" *ngFor="let name of item " (click)="updateQube(item)">
-                    <label *ngIf="userName == name.userId" style="font-weight: bold;     background: springgreen;">
+                    <label *ngIf="userName == name.userId && name.userId != '5f29c3a051592a0017a69bd3'"
+                      style="font-weight: bold;background: springgreen;">
                       {{name.name}}
                     </label>
-                    <label *ngIf="userName != name.userId">
+                    <label *ngIf="userName != name.userId && name.userId != '5f29c3a051592a0017a69bd3'">
                       {{name.name}}
+                    </label>
+                    <label *ngIf="userName != name.userId && name.userId == '5f29c3a051592a0017a69bd3'">
+                      {{name.name}} <i class="fas fa-graduation-cap"></i>
                     </label>
                   </small>
                   <!-- <small *ngIf="userName == name" >

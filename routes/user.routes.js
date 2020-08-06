@@ -91,9 +91,13 @@ router.post("/login", (req, res, next) => {
         });
 });
 router.get("/AllUsers", (req, res) => {
-    User.find({})
+    User.find({
+            "role": {
+                $ne: 'super_admin'
+            }
+        })
         .sort({
-            priority: 1
+            priority: 1,
         }).exec(function (err, users) {
             if (err) {} else {
                 console.log(users);
