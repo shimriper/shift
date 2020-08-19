@@ -41,15 +41,20 @@ export class HomeComponent implements OnInit {
   getShiftsType() {
     this.weekService.getAllSidurs().subscribe((data: []) => {
       const allSidur = data;
+      console.log(allSidur);
       for (var i = 0; i < this.allUsers.length; i++) {
         var userId = this.allUsers[i]._id;
         this.dataGraph[i] = { name: this.allUsers[i].name, A: 0, B: 0, C: 0 };
-        var CountTypeShifts = [0, 0, 0];
+        var CountTypeShifts = [];
+        CountTypeShifts[0] = 0;
+        CountTypeShifts[1] = 0;
+        CountTypeShifts[2] = 0;
+
         for (var key in allSidur) {
           this.countShiftByUsers(allSidur[key], userId, CountTypeShifts);
-          this.dataGraph[i].A += CountTypeShifts[0];
-          this.dataGraph[i].B += CountTypeShifts[1];
-          this.dataGraph[i].C += CountTypeShifts[2];
+          this.dataGraph[i].A = CountTypeShifts[0];
+          this.dataGraph[i].B = CountTypeShifts[1];
+          this.dataGraph[i].C = CountTypeShifts[2];
         }
       }
       //creategraph
@@ -61,7 +66,6 @@ export class HomeComponent implements OnInit {
 
   countShiftByUsers(SidurObj, userId, CountTypeShifts) {
     var qubes = SidurObj.qubes;
-
     for (var i = 0; i < qubes.length; i++) {
       for (var j = 0; j < qubes[i].length; j++) {
         if (userId == qubes[i][j].userId) {
