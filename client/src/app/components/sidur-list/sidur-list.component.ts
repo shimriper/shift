@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import * as moment from 'moment';
+import * as jsPDF from 'jspdf';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { WeekService } from 'src/app/services/week.service';
@@ -11,6 +12,10 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./sidur-list.component.css']
 })
 export class SidurListComponent implements OnInit {
+
+  @ViewChild('htmlData') htmlData: ElementRef;
+
+
   userIsAuthenticated;
   authListenerSubs;
   myUserRule;
@@ -95,6 +100,24 @@ export class SidurListComponent implements OnInit {
       this.saturday = moment(data[0].end).format('DD.MM');
     })
   }
+
+  // public downloadPDF(): void {
+  //   let DATA = this.htmlData.nativeElement;
+  //   // let doc = new jsPDF('p', 'pt', 'a4');
+  //   // var doc = new jsPDF();
+  //       let handleElement = {
+  //     '#editor': function (element, renderer) {
+  //       return true;
+  //     }
+  //   };
+  //   doc.fromHTML(DATA.innerHTML, 15, 15, {
+  //     'width': 200,
+  //     'elementHandlers': handleElement
+  //   });
+
+  //   // doc.save('angular-demo.pdf');
+  // }
+
 
   ngOnInit(): void {
     this.userIsAuthenticated = this.authService.getIsAuth();
