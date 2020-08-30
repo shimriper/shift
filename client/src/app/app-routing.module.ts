@@ -15,6 +15,7 @@ import { EditSidurComponent } from './components/edit-sidur/edit-sidur.component
 import { RequestResetPasswordComponent } from './components/request-reset-password/request-reset-password.component';
 import { ResponseResetPasswordComponent } from './components/response-reset-password/response-reset-password.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import { MyDashboardComponent } from './components/my-dashboard/my-dashboard.component';
 
 
 import { AuthGuard } from '../app/services/auth.guard';
@@ -32,6 +33,8 @@ const routes: Routes = [
   { path: 'users-edit/:id', component: UserEditComponent, canActivate: [AuthGuard] },
   { path: 'edit-sidur/:id', component: EditSidurComponent, canActivate: [AuthGuard] },
   { path: 'my-profile', component: MyProfileComponent, canActivate: [AuthGuard] },
+  { path: 'my-dashboard', component: MyDashboardComponent, canActivate: [AuthGuard] },
+
 
   {
     path: 'request-reset-password',

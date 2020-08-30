@@ -1,10 +1,17 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+
 import * as moment from 'moment';
-import * as jsPDF from 'jspdf';
+
+import { jsPDF } from "jspdf";
+import html2canvas from 'html2canvas';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { WeekService } from 'src/app/services/week.service';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
+const doc = new jsPDF({
+  orientation: "landscape",
+});
 
 @Component({
   selector: 'app-sidur-list',
@@ -13,7 +20,9 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class SidurListComponent implements OnInit {
 
-  @ViewChild('htmlData') htmlData: ElementRef;
+  // @ViewChild('htmlData') htmlData: ElementRef;
+  // @ViewChild('content') content: ElementRef;
+  title = 'html-to-pdf-angular-application';
 
 
   userIsAuthenticated;
@@ -30,7 +39,6 @@ export class SidurListComponent implements OnInit {
   closeResult: string;
   sidurs = [];
   userName;
-
 
   constructor(
     public weekService: WeekService,
@@ -101,30 +109,42 @@ export class SidurListComponent implements OnInit {
     })
   }
 
-  // public downloadPDF(): void {
-  //   let DATA = this.htmlData.nativeElement;
-  //   // let doc = new jsPDF('p', 'pt', 'a4');
-  //   // var doc = new jsPDF();
-  //       let handleElement = {
-  //     '#editor': function (element, renderer) {
-  //       return true;
-  //     }
-  //   };
-  //   doc.fromHTML(DATA.innerHTML, 15, 15, {
-  //     'width': 200,
-  //     'elementHandlers': handleElement
-  //   });
+  // public convetToPDF() {
+  //   var data = document.getElementById('contentToConvert');
+  //   html2canvas(data).then(canvas => {
+  //     // Few necessary setting options
+  //     var imgWidth = 208;
+  //     var pageHeight = 295;
+  //     var imgHeight = canvas.height * imgWidth / canvas.width;
+  //     var heightLeft = imgHeight;
 
-  //   // doc.save('angular-demo.pdf');
+  //     const contentDataURL = canvas.toDataURL('image/png')
+  //     let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+  //     var position = 0;
+  //     pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+  //     pdf.save('new-file.pdf'); // Generated PDF
+  //   });
   // }
 
 
-  ngOnInit(): void {
-    this.userIsAuthenticated = this.authService.getIsAuth();
-    this.myUserRule = this.authService.getMyRule();
-    this.userName = this.authService.getUserId();
-    this.getMySidurByDates(0);
-    this.getLastInsert();
-    this.getAllSidurs();
-  }
+// generatePDF() {
+//   // doc.text(this.content.nativeElement, 1, 1);
+//   // doc.save("two-by-four.pdf");
+//   // doc.text("Hello world!", 10, 10);
+//   // doc.save("a4.pdf");
+
+//   // let doc = new jsPDF();
+//   // doc.addHTML(, function () {
+//   //   doc.save("obrz.pdf");
+//   // });
+// }
+
+ngOnInit(): void {
+  this.userIsAuthenticated = this.authService.getIsAuth();
+  this.myUserRule = this.authService.getMyRule();
+  this.userName = this.authService.getUserId();
+  this.getMySidurByDates(0);
+  this.getLastInsert();
+  this.getAllSidurs();
+}
 }

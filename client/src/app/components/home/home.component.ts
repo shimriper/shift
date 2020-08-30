@@ -118,15 +118,9 @@ export class HomeComponent implements OnInit {
         labelBullet.label.text = "{valueX}";
         labelBullet.label.fill = am4core.color("#fff");
       }
-
       createSeries("A", "משמרת א");
       createSeries("B", "משמרת ב");
       createSeries("C", "משמרת ג");
-
-
-      // for (var i = 0; i < dataGraph.length; i++) {
-      //   createSeries(dataGraph[i].A, dataGraph[i].A);
-      // }
     });
   }
 
@@ -138,6 +132,4 @@ export class HomeComponent implements OnInit {
       }
     });
   }
-
-
 }

@@ -23,6 +23,7 @@ import { ResponseResetPasswordComponent } from './components/response-reset-pass
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
 import { EditSidurComponent } from './components/edit-sidur/edit-sidur.component';
+import { MyDashboardComponent } from './components/my-dashboard/my-dashboard.component';
 
 
 
@@ -41,7 +42,8 @@ import { EditSidurComponent } from './components/edit-sidur/edit-sidur.component
     ResponseResetPasswordComponent,
     UserEditComponent,
     MyProfileComponent,
-    EditSidurComponent
+    EditSidurComponent,
+    MyDashboardComponent
   ],
   imports: [
     BrowserModule,

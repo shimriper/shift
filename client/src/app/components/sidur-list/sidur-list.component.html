@@ -58,14 +58,16 @@
         <td>{{sidur.start | date: 'dd/MM/yyyy'}}</td>
         <td>{{sidur.end | date: 'dd/MM/yyyy'}}</td>
         <td class="text-center edit-block" style="float: left;">
-          <span class="edit" [routerLink]="['/edit-sidur/', sidur._id]" *ngIf="myUserRule == 'admin'">
+          <span class="edit" [routerLink]="['/edit-sidur/', sidur._id]"
+            *ngIf="myUserRule == 'admin' || myUserRule == 'super_admin' ">
             <button type="button" class="btn btn-outline-info">Edit</button>
           </span>
           <span (click)="showSidur(sidur,i)">
             <button type="button" class="btn btn-outline-primary">Show</button>
           </span>
           <span>
-            <!-- <button class="btn btn-danger btn-block" (click)="downloadPDF()">Download PDF</button> -->
+
+            <!-- <button class="btn btn-danger btn-block" (click)="generatePDF()">Download PDF</button> -->
           </span>
         </td>
       </tr>
