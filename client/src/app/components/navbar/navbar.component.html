@@ -17,13 +17,13 @@
           <span style="padding-left: 5px;">Shifts Organizer</span>
         </a>
       </li>
-      <li class="nav-item" *ngIf="userIsAuthenticated">
+      <li class="nav-item" *ngIf="userIsAuthenticated && ( myUserRule != 'super_admin' )">
         <a class="nav-link" routerLink="/my-dashboard" routerLinkActive="active">
           <i class="fas fa-calendar-alt"></i>
           <span style="padding-left: 5px;"> my-dashboard </span>
         </a>
       </li>
-      <li class="nav-item " *ngIf="userIsAuthenticated && (myUserRule == 'admin') ">
+      <li class="nav-item " *ngIf="userIsAuthenticated && (myUserRule == 'admin' || myUserRule == 'super_admin' )">
         <a class="nav-link" routerLink="/home" routerLinkActive="active">
           <i class="fas fa-chart-line"></i> <span style="padding-left: 5px;">Dashboard</span>
         </a>
