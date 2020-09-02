@@ -22,7 +22,13 @@ const userSchema = mongoose.Schema({
     },
     isDisabeld: {
         type: Boolean
-    }
+    },
+    priority:{
+        type:Number
+    },
+    lastModify:{
+        type:Date
+    },
 });
 userSchema.plugin(uniqueValidator, {
     message: 'Email already in use.'

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -8,5 +8,6 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent {
   title = 'client';
+
 
 }

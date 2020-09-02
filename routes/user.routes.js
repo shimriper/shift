@@ -8,6 +8,8 @@ const checkAuth = require("../middleware/check-auth");
 const router = express.Router();
 
 router.post("/signup", (req, res, next) => {
+    const day = Date();
+
     bcrypt.hash(req.body.password, 10).then((hash) => {
         const user = new User({
             name: req.body.name,
@@ -16,6 +18,8 @@ router.post("/signup", (req, res, next) => {
             password: hash,
             isDisabeld: false,
             role: "user",
+            priority: 999,
+            lastModify: day,
         });
         user
             .save()
@@ -39,8 +43,10 @@ router.post("/signup", (req, res, next) => {
 
 router.post("/login", (req, res, next) => {
     let fetchedUser;
+    const day = Date(); // today, 00:00:00
+
     User.findOne({
-            email: req.body.email
+            email: req.body.email,
         })
         .then((user) => {
             if (!user) {
@@ -80,8 +86,23 @@ router.post("/login", (req, res, next) => {
                 expiresIn: 7200,
                 userId: fetchedUser._id,
                 role: fetchedUser.role,
+                userName: fetchedUser.name,
+                lastModify: fetchedUser.lastModify,
             });
+            var user_id = fetchedUser._id;
+            User.findByIdAndUpdate(user_id, {
+                    lastModify: day
+                },
+                function (err, docs) {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        console.log("Updated User : ", docs);
+                    }
+                });
+
         })
+
         .catch((err) => {
             return res.status(401).json({
                 success: false,
@@ -90,6 +111,8 @@ router.post("/login", (req, res, next) => {
             });
         });
 });
+
+
 router.get("/AllUsers", (req, res) => {
     User.find({
             "role": {
@@ -144,6 +167,22 @@ router.get('/read/:id', checkAuth, (req, res, next) => {
         }
     })
 })
+// Update lastmodify User
+router.put('/lastmodify/:id', checkAuth, (req, res, next) => {
+    var day = new Date();
+    User.findByIdAndUpdate(req.params.id, {
+        $set: {
+            lastModify: day
+        }
+    }, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.json(data)
+        }
+    })
+})
+
 
 // Update User
 router.put('/update/:id', checkAuth, (req, res, next) => {

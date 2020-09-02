@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Router } from '@angular/router';
 import { AuthData } from '../models/auth-data.model';
 import { environment } from '../../environments/environment';
+import { DayTemplateContext } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-day-template-context';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +16,25 @@ export class AuthService {
   endpointReset = environment.apiUrl + '/resetpassword'
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   // currentUser = {};
+  private lastLogin: Date;
   private isAuthenticated = false;
   private token: string;
   private rule: string;
   private tokenTimer: any;
   private userId: string;
+  private userName: string;
   private authStatusListener = new Subject<boolean>();
 
   constructor(
     private http: HttpClient,
     public router: Router
   ) { }
+  getUserName() {
+    return this.userName;
+  }
+  getLastLogin() {
+    return this.lastLogin;
+  }
   getMyRule() {
     return this.rule;
   }
@@ -141,13 +150,15 @@ export class AuthService {
       email: email,
       password: password
     };
-    this.http.post<{ token: string, expiresIn: number, userId: string, role: string }>(api, authData)
+    this.http.post<{ token: string, expiresIn: number, userId: string, userName: string, role: string, lastModify: Date }>(api, authData)
       .subscribe(response => {
         const token = response.token;
         const u_id = response.userId;
         this.userId = response.userId;
+        this.userName = response.userName;
         this.token = token;
         this.rule = response.role;
+        this.lastLogin = response.lastModify;
         const role = response.role;
         if (token) {
           const expiresInDuration = response.expiresIn;
@@ -157,7 +168,8 @@ export class AuthService {
           this.authStatusListener.next(true);
           const now = new Date();
           const expirationDate = new Date(now.getTime() + expiresInDuration * 1000);
-          this.saveAuthData(token, expirationDate, u_id, role);
+          const l_login = new Date(this.lastLogin);
+          this.saveAuthData(token, expirationDate, u_id, role, this.userName, l_login);
           this.router.navigate(['/sidur-list']);
         }
       });
@@ -178,6 +190,8 @@ export class AuthService {
       this.rule = authInformation.role;
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
+      this.userName = authInformation.userName;
+      this.lastLogin = authInformation.lastLogin;
     }
   }
   logout() {
@@ -186,6 +200,8 @@ export class AuthService {
     this.authStatusListener.next(false);
     this.userId = null;
     this.rule = null;
+    this.userName = null;
+    this.lastLogin = null;
 
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
@@ -198,11 +214,15 @@ export class AuthService {
     }, duration * 1000);
   }
 
-  private saveAuthData(token: string, expirationDate: Date, userId: string, role: string) {
+  private saveAuthData(token: string, expirationDate: Date, userId: string, role: string, userName: string, lastLogin: Date) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('userId', userId);
     localStorage.setItem('role', role);
+
+    localStorage.setItem('userName', userName);
+    localStorage.setItem('lastLogin', lastLogin.toISOString());
+
   }
 
   private clearAuthData() {
@@ -210,6 +230,8 @@ export class AuthService {
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
     localStorage.removeItem('role');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('lastLogin');
 
   }
 
@@ -218,6 +240,8 @@ export class AuthService {
     const expirationDate = localStorage.getItem('expiration');
     const userId = localStorage.getItem('userId');
     const role = localStorage.getItem('role');
+    const userName = localStorage.getItem('userName');
+    const lastLogin = localStorage.getItem('lastLogin');
 
     if (!token || !expirationDate) {
       return;
@@ -226,7 +250,9 @@ export class AuthService {
       token,
       expirationDate: new Date(expirationDate),
       userId,
-      role
+      role,
+      userName,
+      lastLogin : new Date (lastLogin)
     };
   }
 
