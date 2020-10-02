@@ -110,12 +110,11 @@ export class MyDashboardComponent implements OnInit {
       series.ticks.template.locationX = 1;
       series.ticks.template.locationY = 0.5;
 
-      series.labelsContainer.width = 200;
+      series.labelsContainer.width = 20;
 
       chart.legend = new am4charts.Legend();
       chart.legend.position = "left";
       chart.legend.valign = "bottom";
-
     })
   }
 

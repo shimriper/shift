@@ -40,6 +40,8 @@ export class SidurListComponent implements OnInit {
   sidurs = [];
   userName;
 
+  days = [];
+
   constructor(
     public weekService: WeekService,
     public authService: AuthService,
@@ -58,6 +60,12 @@ export class SidurListComponent implements OnInit {
     return {
       sunday: sunday,
       saturday: saturday
+    }
+  }
+
+  getAllDaysWeek(next: number) {
+    for (var i = 0; i < 6; i++) {
+      this.days[i] = moment().day(i).format('DD.MM');
     }
   }
 
@@ -85,7 +93,7 @@ export class SidurListComponent implements OnInit {
   }
 
   updateQube(item) {
-    this.isUpdate = true
+    this.isUpdate = true;
     // this.modalService.open(content);
   }
 
@@ -127,24 +135,25 @@ export class SidurListComponent implements OnInit {
   // }
 
 
-// generatePDF() {
-//   // doc.text(this.content.nativeElement, 1, 1);
-//   // doc.save("two-by-four.pdf");
-//   // doc.text("Hello world!", 10, 10);
-//   // doc.save("a4.pdf");
+  // generatePDF() {
+  //   // doc.text(this.content.nativeElement, 1, 1);
+  //   // doc.save("two-by-four.pdf");
+  //   // doc.text("Hello world!", 10, 10);
+  //   // doc.save("a4.pdf");
 
-//   // let doc = new jsPDF();
-//   // doc.addHTML(, function () {
-//   //   doc.save("obrz.pdf");
-//   // });
-// }
+  //   // let doc = new jsPDF();
+  //   // doc.addHTML(, function () {
+  //   //   doc.save("obrz.pdf");
+  //   // });
+  // }
 
-ngOnInit(): void {
-  this.userIsAuthenticated = this.authService.getIsAuth();
-  this.myUserRule = this.authService.getMyRule();
-  this.userName = this.authService.getUserId();
-  this.getMySidurByDates(0);
-  this.getLastInsert();
-  this.getAllSidurs();
-}
+  ngOnInit(): void {
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.myUserRule = this.authService.getMyRule();
+    this.userName = this.authService.getUserId();
+    this.getMySidurByDates(0);
+    this.getLastInsert();
+    this.getAllSidurs();
+    this.getAllDaysWeek(0);
+  }
 }

@@ -6,6 +6,7 @@
         <div class="columns is-mobile">
           <div class="column">
             <div class="main" dir="rtl">
+              <label *ngFor="let day of days" style="font-weight:bold;"><small>{{day}}</small>  </label>
               <label *ngFor="let title of weekArray" style="font-weight:bold;"> {{title}} </label>
               <div *ngFor="let item of sidurData;let i=index">
                 <div *ngIf="i !=11" class=" squares">
