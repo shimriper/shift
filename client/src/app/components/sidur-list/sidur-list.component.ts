@@ -63,8 +63,7 @@ export class SidurListComponent implements OnInit {
     }
   }
 
-  getAllDaysWeek(sunday, saturday) {
-    console.log(sunday);
+  getAllDaysWeek(sunday) {
     for (var i = 0; i < 6; i++) {
       this.days[i] = moment(sunday).add(i, 'days').format('DD.MM');
     }
@@ -84,7 +83,7 @@ export class SidurListComponent implements OnInit {
       this.sidurData[11].push({ id: '11', name: '' });
       this.sunday = moment(data[0].start).format('DD.MM');
       this.saturday = moment(data[0].end).format('DD.MM');
-      this.getAllDaysWeek(data[0].start, data[0].end);
+      this.getAllDaysWeek(data[0].start);
     });
   }
 
@@ -106,7 +105,7 @@ export class SidurListComponent implements OnInit {
       this.sidurData[11].push({ id: '11', name: '' });
       this.sunday = moment(data.start).format('DD.MM');
       this.saturday = moment(data.end).format('DD.MM');
-      this.getAllDaysWeek(data.start, data.end);
+      this.getAllDaysWeek(data.start);
     })
 
   }
@@ -117,39 +116,9 @@ export class SidurListComponent implements OnInit {
       this.sidurData[11].push({ id: '11', name: '' });
       this.sunday = moment(data[0].start).format('DD.MM');
       this.saturday = moment(data[0].end).format('DD.MM');
-      this.getAllDaysWeek(data[0].start, data[0].end);
+      this.getAllDaysWeek(data[0].start);
     })
   }
-
-  // public convetToPDF() {
-  //   var data = document.getElementById('contentToConvert');
-  //   html2canvas(data).then(canvas => {
-  //     // Few necessary setting options
-  //     var imgWidth = 208;
-  //     var pageHeight = 295;
-  //     var imgHeight = canvas.height * imgWidth / canvas.width;
-  //     var heightLeft = imgHeight;
-
-  //     const contentDataURL = canvas.toDataURL('image/png')
-  //     let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
-  //     var position = 0;
-  //     pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
-  //     pdf.save('new-file.pdf'); // Generated PDF
-  //   });
-  // }
-
-
-  // generatePDF() {
-  //   // doc.text(this.content.nativeElement, 1, 1);
-  //   // doc.save("two-by-four.pdf");
-  //   // doc.text("Hello world!", 10, 10);
-  //   // doc.save("a4.pdf");
-
-  //   // let doc = new jsPDF();
-  //   // doc.addHTML(, function () {
-  //   //   doc.save("obrz.pdf");
-  //   // });
-  // }
 
   ngOnInit(): void {
     this.userIsAuthenticated = this.authService.getIsAuth();
