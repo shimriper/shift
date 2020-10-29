@@ -63,9 +63,12 @@ export class SidurListComponent implements OnInit {
     }
   }
 
-  getAllDaysWeek(next: number) {
+  getAllDaysWeek(sunday, saturday) {
+    console.log(sunday);
     for (var i = 0; i < 6; i++) {
-      this.days[i] = moment().day(i).format('DD.MM');
+      this.days[i] = moment(sunday).add(i, 'days').format('DD.MM.YY');
+      console.log(this.days[i]);
+
     }
   }
 
@@ -83,6 +86,7 @@ export class SidurListComponent implements OnInit {
       this.sidurData[11].push({ id: '11', name: '' });
       this.sunday = moment(data[0].start).format('DD.MM');
       this.saturday = moment(data[0].end).format('DD.MM');
+      this.getAllDaysWeek(data[0].start, data[0].end);
     });
   }
 
@@ -104,6 +108,9 @@ export class SidurListComponent implements OnInit {
       this.sidurData[11].push({ id: '11', name: '' });
       this.sunday = moment(data.start).format('DD.MM');
       this.saturday = moment(data.end).format('DD.MM');
+      this.getAllDaysWeek(data.start, data.end);
+
+
     })
 
   }
@@ -114,6 +121,7 @@ export class SidurListComponent implements OnInit {
       this.sidurData[11].push({ id: '11', name: '' });
       this.sunday = moment(data[0].start).format('DD.MM');
       this.saturday = moment(data[0].end).format('DD.MM');
+      this.getAllDaysWeek(data[0].start, data[0].end);
     })
   }
 
@@ -154,6 +162,5 @@ export class SidurListComponent implements OnInit {
     this.getMySidurByDates(0);
     this.getLastInsert();
     this.getAllSidurs();
-    this.getAllDaysWeek(0);
   }
 }
