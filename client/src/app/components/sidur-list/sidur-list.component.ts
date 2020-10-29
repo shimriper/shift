@@ -109,8 +109,6 @@ export class SidurListComponent implements OnInit {
       this.sunday = moment(data.start).format('DD.MM');
       this.saturday = moment(data.end).format('DD.MM');
       this.getAllDaysWeek(data.start, data.end);
-
-
     })
 
   }
