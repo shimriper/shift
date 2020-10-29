@@ -66,9 +66,7 @@ export class SidurListComponent implements OnInit {
   getAllDaysWeek(sunday, saturday) {
     console.log(sunday);
     for (var i = 0; i < 6; i++) {
-      this.days[i] = moment(sunday).add(i, 'days').format('DD.MM.YY');
-      console.log(this.days[i]);
-
+      this.days[i] = moment(sunday).add(i, 'days').format('DD.MM');
     }
   }
 
@@ -157,7 +155,7 @@ export class SidurListComponent implements OnInit {
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.myUserRule = this.authService.getMyRule();
     this.userName = this.authService.getUserId();
-    this.getMySidurByDates(0);
+    // this.getMySidurByDates(0);
     this.getLastInsert();
     this.getAllSidurs();
   }
