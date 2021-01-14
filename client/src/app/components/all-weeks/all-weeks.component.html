@@ -124,7 +124,7 @@
       </div>
 
     </div>
-    <div class="media-content">
+    <div class="media-content" *ngIf="!isCreateSidur">
       <button type="button" type="submit" class="button is-primary" (click)="saveSidur()">
         save sidor
       </button>

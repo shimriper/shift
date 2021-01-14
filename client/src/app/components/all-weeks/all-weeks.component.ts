@@ -24,6 +24,8 @@ export class AllWeeksComponent implements OnInit {
   sunday;
   saturday;
   lastSidur;
+  sidurData;
+  isCreateSidur = true;
   public theCheckbox = false;
 
   constructor(
@@ -50,6 +52,22 @@ export class AllWeeksComponent implements OnInit {
     this.getAllReqWeeks();
     this.getLastSat();
     this.getWeek(1);
+  }
+  isExistSidur(startDate, endDate) {
+    this.weekService.getLastInsert().subscribe(data => {
+      this.sidurData = data[0].qubes;
+      this.sidurData[11].push({ id: '11', name: '' });
+      this.sunday = moment(data[0].start).format('DD.MM');
+      this.saturday = moment(data[0].end).format('DD.MM');
+      if (startDate == this.sunday && endDate == this.saturday) {
+        this.isCreateSidur = true;
+      }
+      else {
+        this.isCreateSidur = false
+      }
+      console.log(this.isCreateSidur);
+    })
+
   }
 
   getLastSaterday() {
@@ -296,6 +314,7 @@ export class AllWeeksComponent implements OnInit {
 
     this.sunday = moment(sunday).format('DD.MM');
     this.saturday = moment(saturday).format('DD.MM');
+    this.isExistSidur(this.sunday, this.saturday);
 
     return {
       sunday: sunday,
