@@ -43,8 +43,7 @@ import { MyDashboardComponent } from './components/my-dashboard/my-dashboard.com
     UserEditComponent,
     MyProfileComponent,
     EditSidurComponent,
-    MyDashboardComponent
-  ],
+    MyDashboardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -30,12 +30,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllUsers();
-    this.getShiftsType();
   }
   getAllUsers() {
     this.authService.getAllUsers().subscribe(data => {
       this.allUsers = data;
-      console.log(this.allUsers);
+      this.getShiftsType();
     })
   }
   getShiftsType() {
@@ -44,17 +43,23 @@ export class HomeComponent implements OnInit {
       console.log(allSidur);
       for (var i = 0; i < this.allUsers.length; i++) {
         var userId = this.allUsers[i]._id;
-        this.dataGraph[i] = { name: this.allUsers[i].name, A: 0, B: 0, C: 0 };
+        this.dataGraph[i] = { name: this.allUsers[i].name, A: 0, B: 0, C: 0, D: 0, E: 0 };
         var CountTypeShifts = [];
         CountTypeShifts[0] = 0;
         CountTypeShifts[1] = 0;
         CountTypeShifts[2] = 0;
+        CountTypeShifts[3] = 0;
+        CountTypeShifts[4] = 0;
+
+
 
         for (var key in allSidur) {
           this.countShiftByUsers(allSidur[key], userId, CountTypeShifts);
           this.dataGraph[i].A = CountTypeShifts[0];
           this.dataGraph[i].B = CountTypeShifts[1];
           this.dataGraph[i].C = CountTypeShifts[2];
+          this.dataGraph[i].D = CountTypeShifts[3];
+          this.dataGraph[i].E = CountTypeShifts[4];
         }
       }
       //creategraph
@@ -70,9 +75,15 @@ export class HomeComponent implements OnInit {
       for (var j = 0; j < qubes[i].length; j++) {
         if (userId == qubes[i][j].userId) {
           if (i < 6) {
-            CountTypeShifts[0]++;
+            if (i == 5) {
+              CountTypeShifts[3]++;
+            } else {
+              CountTypeShifts[0]++;
+            }
           } else if (i > 5 && i < 12) {
             CountTypeShifts[1]++;
+          } else if (i == 17) {
+            CountTypeShifts[4]++;
           } else {
             CountTypeShifts[2]++;
           }
@@ -121,6 +132,9 @@ export class HomeComponent implements OnInit {
       createSeries("A", "משמרת א");
       createSeries("B", "משמרת ב");
       createSeries("C", "משמרת ג");
+      createSeries("D", "משמרת ו");
+      createSeries("E", "משמרת ש");
+
     });
   }
 
