@@ -40,7 +40,7 @@ router.delete("/deleteWeek", checkAuth, (req, res) => {
 });
 
 // getAllByStartDate
-router.get("/getAllByStartDate/:start/:end", (req, res) => {
+router.get("/getAllByStartDate/:start/:end", checkAuth, (req, res) => {
     var d = new Date(req.params.start);
     console.log(d);
     Week.find({
@@ -82,7 +82,7 @@ router.get("/getAllByStartDate/:start/:end", (req, res) => {
 // });
 
 // getAllByStartDate
-// router.get("/getLastInsert", (req, res) => {
+// router.get("/getLastInsert", checkAuth, (req, res) => {
 //     Week.find({})
 //         .sort({
 //             "_id": -1
@@ -134,7 +134,7 @@ router.put("/:id", checkAuth, (req, res, next) => {
     });
 });
 
-router.get("", (req, res, next) => {
+router.get("", checkAuth, (req, res, next) => {
     Week.find().then((documents) => {
         res.status(200).json({
             message: "weeks fetched successfully!",
@@ -165,7 +165,7 @@ router.get("/getWeekByCreator", checkAuth, (req, res) => {
         });
 });
 
-router.get("/:id", (req, res, next) => {
+router.get("/:id", checkAuth, (req, res, next) => {
     Week.findById(req.params.id).then((week) => {
         if (week) {
             res.status(200).json(week);
