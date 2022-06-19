@@ -113,7 +113,7 @@ router.post("/login", (req, res, next) => {
 });
 
 
-router.get("/AllUsers", (req, res) => {
+router.get("/AllUsers", checkAuth, (req, res) => {
     User.find({
             "role": {
                 $ne: 'super_admin'
@@ -131,7 +131,7 @@ router.get("/AllUsers", (req, res) => {
 
 
 // getAllByStartDate
-router.get("/getAllUsers", (req, res) => {
+router.get("/getAllUsers", checkAuth, (req, res) => {
     User.find({
             isDisabeld: false
         })
