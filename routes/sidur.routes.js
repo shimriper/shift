@@ -79,7 +79,7 @@ router.get("/getLastSidur/:start/:end", checkAuth, (req, res) => {
 });
 
 // getAllByStartDate
-router.get("/getAllByStartDate", (req, res) => {
+router.get("/getAllByStartDate", checkAuth, (req, res) => {
     Sidur.find({})
         .populate({
             path: "creator"
@@ -98,7 +98,7 @@ router.get("/getAllByStartDate", (req, res) => {
 });
 
 // getAllByStartDate
-router.get("/getLastInsert", (req, res) => {
+router.get("/getLastInsert", checkAuth, (req, res) => {
     Sidur.find({})
         .sort({
             "_id": -1
