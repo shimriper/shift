@@ -24,7 +24,7 @@ router.post("", checkAuth, (req, res) => {
 });
 
 // getAllByStartDate
-router.get("/getAllByStartDate", (req, res) => {
+router.get("/getAllByStartDate", checkAuth, (req, res) => {
     Shift.find({})
         .populate({
             path: "creator"
@@ -66,7 +66,7 @@ router.put("/:id", checkAuth, (req, res, next) => {
     });
 });
 
-router.get("", (req, res, next) => {
+router.get("", checkAuth, (req, res, next) => {
     Shift.find().then((documents) => {
         res.status(200).json({
             message: "Shifts fetched successfully!",
